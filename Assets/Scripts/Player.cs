@@ -1,16 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-<<<<<<< HEAD
 using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.VisualScripting;
-=======
->>>>>>> 1802f1537308957f353a3704a56201d613dec0f0
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-<<<<<<< HEAD
+
     //Numerical Values
     [SerializeField]
     private float _speed = 5.0f;
@@ -223,7 +220,7 @@ public class Player : MonoBehaviour
     }
     
 
-    
+    /*
 =======
     // Start is called before the first frame update
     void Start()
@@ -239,4 +236,5 @@ public class Player : MonoBehaviour
                         // new Vector3(1, 0, 0)
     }
 >>>>>>> 1802f1537308957f353a3704a56201d613dec0f0
+    */
 }

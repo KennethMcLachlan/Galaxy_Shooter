@@ -3,17 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-<<<<<<< HEAD
-  tags:
-  - Enemy
-  - Laser
-  - Triple_Shot
-  - Triple_Shot_Powerup
-  - Asteroid
-  - EnemyLaser
-=======
   tags: []
->>>>>>> 1802f1537308957f353a3704a56201d613dec0f0
   layers:
   - Default
   - TransparentFX
@@ -21,11 +11,7 @@ TagManager:
   - 
   - Water
   - UI
-<<<<<<< HEAD
-  - Post Processing
-=======
   - 
->>>>>>> 1802f1537308957f353a3704a56201d613dec0f0
   - 
   - 
   - 
@@ -55,15 +41,3 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-<<<<<<< HEAD
-  - name: Background
-    uniqueID: 3605058759
-    locked: 0
-  - name: Foreground
-    uniqueID: 480048135
-    locked: 0
-  - name: Post Processing
-    uniqueID: 2220380427
-    locked: 0
-=======
->>>>>>> 1802f1537308957f353a3704a56201d613dec0f0
