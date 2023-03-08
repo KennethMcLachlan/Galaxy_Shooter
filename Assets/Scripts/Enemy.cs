@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -24,6 +25,12 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     private GameObject _enemyLaserPrefab;
+
+
+    [SerializeField]
+    private bool _shieldActive;
+
+    
     
 
 
@@ -62,6 +69,7 @@ public class Enemy : MonoBehaviour
             for (int i = 0; i < lasers.Length; i++)
             {
                 lasers[i].AssignEnemyLaser();
+
             }
 
         }
@@ -80,7 +88,7 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
+       
         if (other.tag == "Player")
         { 
             Player player = other.transform.GetComponent<Player>();
@@ -97,6 +105,7 @@ public class Enemy : MonoBehaviour
             Destroy(GetComponent<Collider2D>());
 
             Destroy(gameObject, 2.8f);
+            
 
             
         }
@@ -118,7 +127,25 @@ public class Enemy : MonoBehaviour
             Destroy(GetComponent<Collider2D>());
 
             Destroy(gameObject, 2.8f);
+            
         }
-        
+
+        if (other.tag == "Laser_Beam")
+        {
+            if (_player != null)
+            {
+                _player.AddScore(100);
+            }
+
+            _anim.SetTrigger("OnEnemyDeath");
+            _speed = 0.0f;
+
+            _audioSource.Play();
+
+            Destroy(GetComponent<Collider2D>());
+
+            Destroy(gameObject, 2.8f);
+        }
     }
+
 }

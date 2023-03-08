@@ -25,6 +25,7 @@ public class Asteroid : MonoBehaviour
     {
         if (other.tag == "Laser")
         {
+            GameObject.Find("Main Camera").GetComponent<CameraShake>().StartShake();
             Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
 
             Destroy(other.gameObject);
