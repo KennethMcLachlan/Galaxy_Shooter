@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class EnemyLeft : MonoBehaviour
 {
 
     [SerializeField]
@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private AudioSource _audioSource;
 
-    
+
     [SerializeField]
     private float _fireRate = 3.0f;
 
@@ -33,8 +33,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private int _enemyDirectionID;
 
-    
-    
+
+
 
 
     void Start()
@@ -42,24 +42,24 @@ public class Enemy : MonoBehaviour
         _player = GameObject.Find("Player_Ship").GetComponent<Player>();
 
         _audioSource = GetComponent<AudioSource>();
-        
+
         if (_player == null)
         {
             Debug.LogError("Player is null");
         }
-       
+
         _anim = GetComponent<Animator>();
 
         if (_anim == null)
         {
             Debug.LogError("Animator is null");
         }
-        
+
     }
 
     void Update()
     {
-        CalculateMovement();
+        CalculateMovementLeft();
 
         if (Time.time > _canFire)
         {
@@ -68,24 +68,23 @@ public class Enemy : MonoBehaviour
 
             GameObject enemyLaser = Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
-            
+
             for (int i = 0; i < lasers.Length; i++)
             {
                 lasers[i].AssignEnemyLaser();
 
             }
-
         }
     }
 
-    public void CalculateMovement()
+    public void CalculateMovementLeft()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
-        
-        if (transform.position.y < -6f)
+        transform.Translate(Vector3.left * _speed * Time.deltaTime);
+
+        if (transform.position.x < -11f)
         {
-            float randomX = Random.Range(-9.5f, 9.5f);
-            transform.position = new Vector3(randomX, 7f, 0);
+            float randomY = Random.Range(-5.5f, 5.5f);
+            transform.position = new Vector3(11f, randomY, 0);
         }
     }
 
@@ -96,7 +95,7 @@ public class Enemy : MonoBehaviour
 
         if (transform.position.x < -11f)
         {
-            float randomY = randomY.Range(-5.5f, 5.5f);
+            float randomY = Random.Range(-5.5f, 5.5f);
             transform.postition = new Vector3(11f, randomY, 0);
         }
     }
@@ -107,7 +106,7 @@ public class Enemy : MonoBehaviour
 
         if (transform.postition.x > 11f)
         {
-            float randomY = randomY.Range(0 = -5.5f, 5.5f);
+            float randomY = Random.Range(0 = -5.5f, 5.5f);
             transform.postion = new Vector3(-11f, randomY, 0);
         }
     }
@@ -115,11 +114,11 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-       
+
         if (other.tag == "Player")
-        { 
+        {
             Player player = other.transform.GetComponent<Player>();
-            
+
             if (player != null)
             {
                 player.Damage();
@@ -132,9 +131,9 @@ public class Enemy : MonoBehaviour
             Destroy(GetComponent<Collider2D>());
 
             Destroy(gameObject, 2.8f);
-            
 
-            
+
+
         }
 
         if (other.tag == "Laser")
@@ -145,7 +144,7 @@ public class Enemy : MonoBehaviour
             {
                 _player.AddScore(100);
             }
-            
+
             _anim.SetTrigger("OnEnemyDeath");
             _speed = 0.0f;
 
@@ -154,7 +153,7 @@ public class Enemy : MonoBehaviour
             Destroy(GetComponent<Collider2D>());
 
             Destroy(gameObject, 2.8f);
-            
+
         }
 
         if (other.tag == "Laser_Beam")
