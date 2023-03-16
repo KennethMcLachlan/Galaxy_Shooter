@@ -20,8 +20,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _starPowerup;
 
-    //[SerializeField]
-    //private GameObject[] _enemyDirections;
+    [SerializeField]
+    private GameObject[] _enemyDirections;
 
     public void StartSpawning()
     {

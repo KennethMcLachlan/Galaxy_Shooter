@@ -34,8 +34,8 @@ public class Powerup : MonoBehaviour
 
             if (player != null)
             {
-               GameObject.Find("Powerup_Audio").GetComponent<AudioSource>().Play();
-               
+                GameObject.Find("Powerup_Audio").GetComponent<AudioSource>().Play();
+
                 switch (powerupID)
                 {
                     case 0:
@@ -60,6 +60,11 @@ public class Powerup : MonoBehaviour
                         Debug.Log("Default Value");
                         break;
                 }
+            }
+
+            else if (player != null)
+            {
+
             }
 
             

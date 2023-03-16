@@ -80,7 +80,6 @@ public class UIManager : MonoBehaviour
     public void UpdateThrusterPercentage(float percentage)
     {
         _thrusterText.text = percentage.ToString("F0") + "%";
-        
     }
 
     private void GameOverSequence()
