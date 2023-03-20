@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3639247117651005228}
-  - component: {fileID: 6080066476392027318}
   - component: {fileID: 4634540178542654399}
   - component: {fileID: 6996511084727448979}
   - component: {fileID: 8627116893561923495}
   - component: {fileID: 7612315643774081117}
   - component: {fileID: -6512530629248385986}
+  - component: {fileID: 3808481905022466046}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -37,24 +37,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6080066476392027318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1263197054175652533}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55188c1be229efa4ab8c7c8f3525ae1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 4
-  _anim: {fileID: 0}
-  _audioSource: {fileID: 0}
-  _fireRate: 3
-  _enemyLaserPrefab: {fileID: 838442905133171384, guid: 69f80184dc206cc42ae1002b42df5dd0, type: 3}
-  _shieldActive: 0
 --- !u!212 &4634540178542654399
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -270,3 +252,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3808481905022466046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263197054175652533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55188c1be229efa4ab8c7c8f3525ae1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 4
+  _anim: {fileID: 0}
+  _audioSource: {fileID: 0}
+  _fireRate: 3
+  _enemyLaserPrefab: {fileID: 838442905133171384, guid: 69f80184dc206cc42ae1002b42df5dd0, type: 3}
+  _shieldActive: 0
+  _enemyDirectionID: 0

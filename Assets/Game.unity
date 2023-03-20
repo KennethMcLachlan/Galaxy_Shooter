@@ -133,6 +133,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1582816029808834916, guid: fec5a8ad68f7ed14a848047878ed3326, type: 3}
   m_PrefabInstance: {fileID: 1582816030068045110}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &309583606
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 309583608}
+  - component: {fileID: 309583607}
+  m_Layer: 0
+  m_Name: Speed_AntiPower
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &309583607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309583606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe9e75921a912e248bca137e11810068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 3
+  powerupID: 0
+--- !u!4 &309583608
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309583606}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 618.2102, y: 33.098446, z: -0.09235474}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &469028579 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 348228558821021687, guid: 4801960d9a00f0b478c543a1d7fa18c3, type: 3}
@@ -1081,10 +1127,11 @@ MonoBehaviour:
   _lives: 3
   _shieldLives: 3
   _ammoCount: 15
-  _ammoRange: 60
+  _ammoRange: 50
   _maxLives: 3
   _maxPercentage: 100
   _minPercentage: 0
+  _percentageColor: {fileID: 1354995625}
   _thrusterBoostActive: 0
   _shiftSpeedMultiplier: 1.5
   _laserPrefab: {fileID: 2228294577408681024, guid: 720fba511f3ce6749b4f9fbf159d22be, type: 3}
@@ -1100,6 +1147,7 @@ MonoBehaviour:
   _isStarPowerActive: 0
   _score: 0
   _percentage: 100
+  _ammoCountText: {fileID: 729017400}
   _fireRightEngine: {fileID: 1793325598}
   _fireLeftEngine: {fileID: 1647633213}
   _powerupAudio: {fileID: 469028579}
@@ -1607,6 +1655,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1354995625 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 930593119539600407, guid: 3802e4fb71ca1e64cbceda5812d75fcc, type: 3}
+  m_PrefabInstance: {fileID: 930593121192897409}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1361906636
 GameObject:
   m_ObjectHideFlags: 0
@@ -1857,6 +1910,7 @@ MonoBehaviour:
   - {fileID: 777765551181882361, guid: 133fe5138e301e7499f39fc66c8eb9be, type: 3}
   - {fileID: 626028990494303054, guid: ea0bf262d589dfa4b8e628a1e81127d8, type: 3}
   _starPowerup: {fileID: 1994377994204222254, guid: 26ed752ff0344d8428c65824bc4fcb29, type: 3}
+  _enemyDirections: []
 --- !u!4 &1415568545
 Transform:
   m_ObjectHideFlags: 0
@@ -2181,7 +2235,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 930593119539600409, guid: 3802e4fb71ca1e64cbceda5812d75fcc, type: 3}
   m_PrefabInstance: {fileID: 930593121192897409}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1354995625}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}

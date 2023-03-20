@@ -30,6 +30,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private bool _shieldActive;
 
+    [SerializeField]
+    private int _enemyDirectionID;
+
     
     
 
@@ -75,7 +78,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void CalculateMovement()
+    public void CalculateMovement()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
         
@@ -85,6 +88,30 @@ public class Enemy : MonoBehaviour
             transform.position = new Vector3(randomX, 7f, 0);
         }
     }
+
+    /*
+    public void CalculateMovementLeft()
+    {
+        transform.Translate(Vector3.left * _speed * Time.deltaTime);
+
+        if (transform.position.x < -11f)
+        {
+            float randomY = randomY.Range(-5.5f, 5.5f);
+            transform.postition = new Vector3(11f, randomY, 0);
+        }
+    }
+
+    public void CalculateMovementRight()
+    {
+        transform.Translate(Vector3.right * _speed * Time.DeltaTime);
+
+        if (transform.postition.x > 11f)
+        {
+            float randomY = randomY.Range(0 = -5.5f, 5.5f);
+            transform.postion = new Vector3(-11f, randomY, 0);
+        }
+    }
+    */
 
     private void OnTriggerEnter2D(Collider2D other)
     {

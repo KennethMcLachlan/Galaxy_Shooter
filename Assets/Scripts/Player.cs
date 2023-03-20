@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Player : MonoBehaviour
 {
@@ -42,6 +43,9 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private int _minPercentage = 0;
+
+    [SerializeField]
+    private GameObject _percentageColor;
 
     [SerializeField]
     private bool _thrusterBoostActive;
@@ -98,6 +102,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _percentage;
 
+    [SerializeField]
+    private GameObject _ammoCountText;
+
 
     //Engine Visuals
     [SerializeField]
@@ -134,6 +141,7 @@ public class Player : MonoBehaviour
             Debug.LogError("The UI Manager is Null.");
         }
 
+        //this.gameObject.GetComponent<SpriteRenderer>().material.color = Color.green;
     }
 
 
@@ -173,12 +181,35 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(10.5f, transform.position.y, 0);
         }
 
+
+
         if (_percentage > 0)
         {
             _thrusterBoostActive = true;
+
+            
+            //GameObject.Find("Thruster_Text_UI").GetComponent<TMP_Text>().color = Color.red;
+
+
         }
 
-        else if (_percentage < _minPercentage)
+        if (_percentage <= 25)
+        {
+            _percentageColor.GetComponent<TMP_Text>().color = Color.red;
+        }
+        else if (_percentage <= 50)
+        {
+            _percentageColor.GetComponent<TMP_Text>().color = Color.yellow;
+        }
+
+        else if (_percentage <= 99)
+        {
+            _percentageColor.GetComponent<TMP_Text>().color = Color.green;
+        }
+
+        else _percentageColor.GetComponent<TMP_Text>().color = Color.white;
+
+        if (_percentage < _minPercentage)
         {
             _percentage = _minPercentage;
             _thrusterBoostActive = false;
@@ -244,6 +275,23 @@ public class Player : MonoBehaviour
             _ammoCount = _ammoRange;
         }
 
+        if (_ammoCount <= 5)
+        {
+            _ammoCountText.GetComponent<TMP_Text>().color = Color.red;
+        }
+
+        else if (_ammoCount <= 30)
+        {
+            _ammoCountText.GetComponent<TMP_Text>().color = Color.yellow;
+        }
+
+        else if (_ammoCount < 50)
+        {
+            _ammoCountText.GetComponent<TMP_Text>().color = Color.green;
+        }
+
+        else _ammoCountText.GetComponent<TMP_Text>().color = Color.white;
+        
         _uiManager.UpdateAmmoCount(_ammoCount);
 
     }
@@ -368,6 +416,17 @@ public class Player : MonoBehaviour
         _laserBeamPrefab.SetActive(false);
     }
 
+    // Anti - Power-ups
+
+    public void AntiSpeedPowerup()
+    {
+
+    }
+
+    IEnumerator AntiSpeedRoutine()
+    {
+
+    }
     public void LivesManager()
     {
         if (_lives > _maxLives)
