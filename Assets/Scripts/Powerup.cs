@@ -61,6 +61,7 @@ public class Powerup : MonoBehaviour
                         break;
                     case 5:
                         player.StarPowerupActive();
+                        GameObject.Find("Powerup_Audio").GetComponent<AudioSource>().Play();
                         break;
                     case 6:
                         player.AntiPower();

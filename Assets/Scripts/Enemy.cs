@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour
     private bool _shieldActive;
 
     [SerializeField]
-    private int _enemyDirectionID;
+    private int _enemyDirection;
 
     
     
@@ -39,6 +39,8 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        //StartCoroutine(EnemyMovementRoutine());
+
         _player = GameObject.Find("Player_Ship").GetComponent<Player>();
 
         _audioSource = GetComponent<AudioSource>();
@@ -59,7 +61,24 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        CalculateMovement();
+
+        int _enemyDirection = Random.Range(0, 2);
+
+        switch (_enemyDirection)
+        {
+            case 0:
+                CalculateMovement();
+                break;
+            case 1:
+                CalculateMovementLeft();
+                break;
+            case 2:
+                CalculateMovementRight();
+                break;
+            default:
+                break;
+        }
+        //CalculateMovement();
 
         if (Time.time > _canFire)
         {
@@ -76,6 +95,7 @@ public class Enemy : MonoBehaviour
             }
 
         }
+        
     }
 
     public void CalculateMovement()
@@ -89,30 +109,56 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    /*
+    
     public void CalculateMovementLeft()
     {
         transform.Translate(Vector3.left * _speed * Time.deltaTime);
 
         if (transform.position.x < -11f)
         {
-            float randomY = randomY.Range(-5.5f, 5.5f);
-            transform.postition = new Vector3(11f, randomY, 0);
+            float randomY = Random.Range(-5.5f, 5.5f);
+            transform.position = new Vector3(11f, randomY, 0);
         }
     }
 
     public void CalculateMovementRight()
     {
-        transform.Translate(Vector3.right * _speed * Time.DeltaTime);
+        transform.Translate(Vector3.right * _speed * Time.deltaTime);
 
-        if (transform.postition.x > 11f)
+        if (transform.position.x > 11f)
         {
-            float randomY = randomY.Range(0 = -5.5f, 5.5f);
-            transform.postion = new Vector3(-11f, randomY, 0);
+            float randomY = Random.Range(-5.5f, 5.5f);
+            transform.position = new Vector3(-11f, randomY, 0);
         }
     }
-    */
+    
+    /*
+    IEnumerator EnemyMovementRoutine()
+    {
+        yield return new WaitForSeconds(5f);
 
+        int _enemyDirection = Random.Range(0, 2);
+
+        while (gameObject != null)
+        {
+            switch (_enemyDirection)
+            {
+                case 0:
+                    CalculateMovement();
+                    break;
+                case 1:
+                    CalculateMovementLeft();
+                    break;
+                case 2:
+                    CalculateMovementRight();
+                    break;
+                default:
+                    break;
+            }
+        }
+        yield return new WaitForSeconds(5f);
+    }
+    */
     private void OnTriggerEnter2D(Collider2D other)
     {
        
