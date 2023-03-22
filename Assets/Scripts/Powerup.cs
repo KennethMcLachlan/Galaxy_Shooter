@@ -8,8 +8,9 @@ public class Powerup : MonoBehaviour
     [SerializeField]
     private float _speed = 3.0f;
 
+
     [SerializeField]
-    //0 = Triple Shot | 1 = Speed | 2 = Shield | 3 = Ammo | 4 = Extra Life
+    //0 = Triple Shot | 1 = Speed | 2 = Shield | 3 = Ammo | 4 = Extra Life | 5 = Star Power | 6 = Anti-Power-up
     private int powerupID;
     void Start()
     {
@@ -34,27 +35,35 @@ public class Powerup : MonoBehaviour
 
             if (player != null)
             {
-                GameObject.Find("Powerup_Audio").GetComponent<AudioSource>().Play();
+                
 
                 switch (powerupID)
                 {
                     case 0:
                         player.TripleShotActive();
+                        GameObject.Find("Powerup_Audio").GetComponent<AudioSource>().Play();
                         break;
                     case 1:
                         player.SpeedBoostActive();
+                        GameObject.Find("Powerup_Audio").GetComponent<AudioSource>().Play();
                         break;
                     case 2:
                         player.ShieldPowerupActive();
+                        GameObject.Find("Powerup_Audio").GetComponent<AudioSource>().Play();
                         break;
                     case 3:
                         player.AmmoFillPowerupActive();
+                        GameObject.Find("Powerup_Audio").GetComponent<AudioSource>().Play();
                         break;
                     case 4:
                         player.ExtraLifePowerupActive();
+                        GameObject.Find("Powerup_Audio").GetComponent<AudioSource>().Play();
                         break;
                     case 5:
                         player.StarPowerupActive();
+                        break;
+                    case 6:
+                        player.AntiPower();
                         break;
                     default:
                         Debug.Log("Default Value");
@@ -62,12 +71,6 @@ public class Powerup : MonoBehaviour
                 }
             }
 
-            else if (player != null)
-            {
-
-            }
-
-            
             Destroy(gameObject);
         }
     }

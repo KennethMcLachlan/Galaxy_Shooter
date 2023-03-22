@@ -123,6 +123,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     AudioSource _laserBeamAudio;
 
+    [SerializeField]
+    AudioSource _antiPowerupAudio;
+
 
 
     void Start()
@@ -141,7 +144,6 @@ public class Player : MonoBehaviour
             Debug.LogError("The UI Manager is Null.");
         }
 
-        //this.gameObject.GetComponent<SpriteRenderer>().material.color = Color.green;
     }
 
 
@@ -181,16 +183,9 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(10.5f, transform.position.y, 0);
         }
 
-
-
         if (_percentage > 0)
         {
             _thrusterBoostActive = true;
-
-            
-            //GameObject.Find("Thruster_Text_UI").GetComponent<TMP_Text>().color = Color.red;
-
-
         }
 
         if (_percentage <= 25)
@@ -416,17 +411,23 @@ public class Player : MonoBehaviour
         _laserBeamPrefab.SetActive(false);
     }
 
-    // Anti - Power-ups
-
-    public void AntiSpeedPowerup()
+    public void AntiPower()
     {
+        _antiPowerupAudio.Play();
+        _speed /= _speedMultiplier;
+        gameObject.GetComponent<SpriteRenderer>().material.color = Color.green;
 
+        StartCoroutine(AntiSpeedRoutine());
+        
     }
-
+    
     IEnumerator AntiSpeedRoutine()
     {
-
+        yield return new WaitForSeconds(5.0f);
+        _speed *= _speedMultiplier;
+        gameObject.GetComponent<SpriteRenderer>().material.color = Color.white;
     }
+    
     public void LivesManager()
     {
         if (_lives > _maxLives)
