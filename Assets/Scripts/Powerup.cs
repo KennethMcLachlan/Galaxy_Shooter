@@ -8,13 +8,19 @@ public class Powerup : MonoBehaviour
     [SerializeField]
     private float _speed = 3.0f;
 
+    [SerializeField]
+    private float _magnetSpeed = 5.0f;
+
+    [SerializeField]
+    private GameObject Player;
 
     [SerializeField]
     //0 = Triple Shot | 1 = Speed | 2 = Shield | 3 = Ammo | 4 = Extra Life | 5 = Star Power | 6 = Anti-Power-up
     private int powerupID;
     void Start()
     {
-
+        Player = GameObject.FindGameObjectWithTag("Player");
+        
     }
 
     void Update()
@@ -24,6 +30,12 @@ public class Powerup : MonoBehaviour
         if (transform.position.y < -4.5f)
         {
             Destroy(gameObject);
+        }
+
+        if (Input.GetKey(KeyCode.C))
+        {
+            Magnet();
+            
         }
     }
 
@@ -74,6 +86,11 @@ public class Powerup : MonoBehaviour
 
             Destroy(gameObject);
         }
+    }
+
+    private void Magnet()
+    {
+        transform.position = Vector3.Lerp(transform.position, Player.transform.position, _magnetSpeed * Time.deltaTime);
     }
 }
 

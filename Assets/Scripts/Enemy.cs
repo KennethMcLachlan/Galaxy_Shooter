@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -33,6 +34,15 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private int _enemyDirection;
 
+    private float _distance;
+
+    [SerializeField]
+    private float _ramSpeed = 2.0f;
+
+    private float _attackRange = 3.5f;
+
+    private float _ramMultiplier = 1.5f;
+
     
     
 
@@ -61,7 +71,7 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-
+        /*
         int _enemyDirection = Random.Range(0, 2);
 
         switch (_enemyDirection)
@@ -78,7 +88,8 @@ public class Enemy : MonoBehaviour
             default:
                 break;
         }
-        //CalculateMovement();
+        */
+        CalculateMovement();
 
         if (Time.time > _canFire)
         {
@@ -96,6 +107,17 @@ public class Enemy : MonoBehaviour
 
         }
         
+        _distance = Vector3.Distance(_player.transform.position, transform.position);
+
+        if (_distance <= _attackRange)
+        {
+            Vector3 direction = transform.position - _player.transform.position;
+            direction = direction.normalized;
+            transform.position -= direction * Time.deltaTime * (_ramSpeed * _ramMultiplier);
+            gameObject.GetComponent<SpriteRenderer>().material.color = Color.red;
+
+        }
+        else gameObject.GetComponent<SpriteRenderer>().material.color = Color.white;
     }
 
     public void CalculateMovement()
@@ -168,6 +190,7 @@ public class Enemy : MonoBehaviour
             
             if (player != null)
             {
+                
                 player.Damage();
             }
 
@@ -177,10 +200,9 @@ public class Enemy : MonoBehaviour
             _audioSource.Play();
             Destroy(GetComponent<Collider2D>());
 
-            Destroy(gameObject, 2.8f);
             
 
-            
+            Destroy(gameObject, 2.8f);
         }
 
         if (other.tag == "Laser")
