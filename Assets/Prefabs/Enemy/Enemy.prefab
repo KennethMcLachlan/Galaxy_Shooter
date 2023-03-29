@@ -270,5 +270,4 @@ MonoBehaviour:
   _fireRate: 3
   _enemyLaserPrefab: {fileID: 838442905133171384, guid: 69f80184dc206cc42ae1002b42df5dd0, type: 3}
   _shieldActive: 0
-  _enemyDirection: 0
-  Player: {fileID: 3076940199602077478, guid: a0b753699d542cb4b84d6d029a30617f, type: 3}
+  _ramSpeed: 3

@@ -31,7 +31,6 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private bool _shieldActive;
 
-    [SerializeField]
     private int _enemyDirection;
 
     private float _distance;
@@ -39,9 +38,10 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _ramSpeed = 2.0f;
 
-    private float _attackRange = 3.5f;
+    [SerializeField]
+    private float _ramRange = 3.5f;
 
-    private float _ramMultiplier = 1.5f;
+    private bool _enemyIsDead;
 
     
     
@@ -49,8 +49,6 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        //StartCoroutine(EnemyMovementRoutine());
-
         _player = GameObject.Find("Player_Ship").GetComponent<Player>();
 
         _audioSource = GetComponent<AudioSource>();
@@ -71,9 +69,6 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        /*
-        int _enemyDirection = Random.Range(0, 2);
-
         switch (_enemyDirection)
         {
             case 0:
@@ -88,8 +83,6 @@ public class Enemy : MonoBehaviour
             default:
                 break;
         }
-        */
-        CalculateMovement();
 
         if (Time.time > _canFire)
         {
@@ -106,18 +99,30 @@ public class Enemy : MonoBehaviour
             }
 
         }
-        
-        _distance = Vector3.Distance(_player.transform.position, transform.position);
 
-        if (_distance <= _attackRange)
+        if (_player != null)
+        {
+            _distance = Vector3.Distance(_player.transform.position, transform.position);
+            
+        }
+
+        if (_distance <= _ramRange)
         {
             Vector3 direction = transform.position - _player.transform.position;
             direction = direction.normalized;
-            transform.position -= direction * Time.deltaTime * (_ramSpeed * _ramMultiplier);
+            transform.position -= direction * Time.deltaTime * _ramSpeed;
             gameObject.GetComponent<SpriteRenderer>().material.color = Color.red;
 
+            
         }
         else gameObject.GetComponent<SpriteRenderer>().material.color = Color.white;
+
+        
+    }
+
+    public void AssignDirection(int direction)
+    {
+        _enemyDirection = direction;
     }
 
     public void CalculateMovement()
@@ -138,7 +143,7 @@ public class Enemy : MonoBehaviour
 
         if (transform.position.x < -11f)
         {
-            float randomY = Random.Range(-5.5f, 5.5f);
+            float randomY = Random.Range(-1.0f, 5.5f);
             transform.position = new Vector3(11f, randomY, 0);
         }
     }
@@ -149,38 +154,11 @@ public class Enemy : MonoBehaviour
 
         if (transform.position.x > 11f)
         {
-            float randomY = Random.Range(-5.5f, 5.5f);
+            float randomY = Random.Range(-1.0f, 5.5f);
             transform.position = new Vector3(-11f, randomY, 0);
         }
     }
-    
-    /*
-    IEnumerator EnemyMovementRoutine()
-    {
-        yield return new WaitForSeconds(5f);
 
-        int _enemyDirection = Random.Range(0, 2);
-
-        while (gameObject != null)
-        {
-            switch (_enemyDirection)
-            {
-                case 0:
-                    CalculateMovement();
-                    break;
-                case 1:
-                    CalculateMovementLeft();
-                    break;
-                case 2:
-                    CalculateMovementRight();
-                    break;
-                default:
-                    break;
-            }
-        }
-        yield return new WaitForSeconds(5f);
-    }
-    */
     private void OnTriggerEnter2D(Collider2D other)
     {
        
@@ -194,13 +172,21 @@ public class Enemy : MonoBehaviour
                 player.Damage();
             }
 
+            _enemyIsDead = true;
+
+            if (_enemyIsDead == true)
+            {
+                _ramRange = 0;
+                gameObject.GetComponent<SpriteRenderer>().material.color = Color.white;
+            }
+
             _anim.SetTrigger("OnEnemyDeath");
+            
             _speed = 0.0f;
 
             _audioSource.Play();
-            Destroy(GetComponent<Collider2D>());
-
             
+            Destroy(GetComponent<Collider2D>());
 
             Destroy(gameObject, 2.8f);
         }
@@ -213,8 +199,17 @@ public class Enemy : MonoBehaviour
             {
                 _player.AddScore(100);
             }
-            
+
+            _enemyIsDead = true;
+
+            if (_enemyIsDead == true)
+            {
+                _ramRange = 0;
+                gameObject.GetComponent<SpriteRenderer>().material.color = Color.white;
+            }
+
             _anim.SetTrigger("OnEnemyDeath");
+
             _speed = 0.0f;
 
             _audioSource.Play();
@@ -232,7 +227,16 @@ public class Enemy : MonoBehaviour
                 _player.AddScore(100);
             }
 
+            _enemyIsDead = true;
+
+            if (_enemyIsDead == true)
+            {
+                _ramRange = 0;
+                gameObject.GetComponent<SpriteRenderer>().material.color = Color.white;
+            }
+
             _anim.SetTrigger("OnEnemyDeath");
+
             _speed = 0.0f;
 
             _audioSource.Play();
