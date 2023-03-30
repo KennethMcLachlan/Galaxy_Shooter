@@ -3,7 +3,16 @@ guid: 45c0a9a92ccaec9428bc112871a3813d
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _scoreText: {instanceID: 0}
+  - _gameOverText: {instanceID: 0}
+  - _restartText: {instanceID: 0}
+  - _gameManager: {instanceID: 0}
+  - _ammoCountNumber: {instanceID: 0}
+  - _thrusterText: {instanceID: 0}
+  - _endOfWaveText: {fileID: 1853013365832839773, guid: 4b6e9aa95de3d4f49b3e32cd0b95194b, type: 3}
+  - _livesImg: {instanceID: 0}
+  - _thrusterSprite: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

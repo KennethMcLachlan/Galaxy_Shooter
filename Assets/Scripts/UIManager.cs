@@ -26,6 +26,9 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TMP_Text _thrusterText;
 
+    [SerializeField]
+    private TMP_Text _endOfWaveText;
+
 
     //Sprites and Images
 
@@ -103,5 +106,43 @@ public class UIManager : MonoBehaviour
             _gameOverText.text = "";
             yield return new WaitForSeconds(0.5F);
         }
+    }
+    
+    public void StartUpdateWavesCoroutine()
+    {
+        Debug.Log("Update Waves Coroutine has Begun");
+
+        _endOfWaveText.gameObject.SetActive(true);
+        StartCoroutine(UpdateWavesCountDownRoutine());
+        _endOfWaveText.gameObject.SetActive(false);
+        //return;
+        
+    }
+    
+    IEnumerator UpdateWavesCountDownRoutine()
+    {
+        while (true)
+        {
+            //_endOfWaveText.gameObject.SetActive(true);
+
+            _endOfWaveText.text = "END OF WAVE";
+            yield return new WaitForSeconds(3.0f);
+
+            _endOfWaveText.text = "NEXT WAVE IN...";
+            yield return new WaitForSeconds(3.0f);
+
+            _endOfWaveText.text = "3";
+            yield return new WaitForSeconds(1.0f);
+
+            _endOfWaveText.text = "2";
+            yield return new WaitForSeconds(1.0f);
+
+            _endOfWaveText.text = "1";
+            yield return new WaitForSeconds(1.0f);
+
+            //_endOfWaveText.gameObject.SetActive(false);
+        }
+
+        
     }
 }
