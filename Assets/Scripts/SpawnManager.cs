@@ -103,6 +103,7 @@ public class SpawnManager : MonoBehaviour
             
             Debug.Log("End of first wave");
 
+            _uiManager.StartUpdateWavesCoroutine();
             /*
             _endOfWaveText.gameObject.SetActive(true);
 

@@ -41,7 +41,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Sprite _thrusterSprite;
 
-    
+    [SerializeField]
+    public SpawnManager _spawnManager;
+
+    private bool _waveIsOver;
 
 
     
@@ -57,6 +60,8 @@ public class UIManager : MonoBehaviour
         _gameOverText.gameObject.SetActive(false);
         
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
+
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
     }
 
     
@@ -112,37 +117,34 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log("Update Waves Coroutine has Begun");
 
-        _endOfWaveText.gameObject.SetActive(true);
+        //_endOfWaveText.gameObject.SetActive(true);
         StartCoroutine(UpdateWavesCountDownRoutine());
-        _endOfWaveText.gameObject.SetActive(false);
+        //_endOfWaveText.gameObject.SetActive(false);
         //return;
         
     }
-    
+
     IEnumerator UpdateWavesCountDownRoutine()
     {
-        while (true)
-        {
-            //_endOfWaveText.gameObject.SetActive(true);
 
-            _endOfWaveText.text = "END OF WAVE";
-            yield return new WaitForSeconds(3.0f);
+        _endOfWaveText.gameObject.SetActive(true);
 
-            _endOfWaveText.text = "NEXT WAVE IN...";
-            yield return new WaitForSeconds(3.0f);
+        _endOfWaveText.text = "END OF WAVE";
+        yield return new WaitForSeconds(3.0f);
 
-            _endOfWaveText.text = "3";
-            yield return new WaitForSeconds(1.0f);
+        _endOfWaveText.text = "NEXT WAVE IN...";
+        yield return new WaitForSeconds(3.0f);
 
-            _endOfWaveText.text = "2";
-            yield return new WaitForSeconds(1.0f);
+        _endOfWaveText.text = "3";
+        yield return new WaitForSeconds(1.0f);
 
-            _endOfWaveText.text = "1";
-            yield return new WaitForSeconds(1.0f);
+        _endOfWaveText.text = "2";
+        yield return new WaitForSeconds(1.0f);
 
-            //_endOfWaveText.gameObject.SetActive(false);
-        }
+        _endOfWaveText.text = "1";
+        yield return new WaitForSeconds(1.0f);
 
-        
+        _endOfWaveText.gameObject.SetActive(false);
+
     }
 }
