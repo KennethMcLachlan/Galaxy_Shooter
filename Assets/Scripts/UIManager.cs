@@ -129,22 +129,35 @@ public class UIManager : MonoBehaviour
 
         _endOfWaveText.gameObject.SetActive(true);
 
+        Debug.Log("End of Wave");
+
         _endOfWaveText.text = "END OF WAVE";
         yield return new WaitForSeconds(3.0f);
+
+        Debug.Log("Next wave in...");
 
         _endOfWaveText.text = "NEXT WAVE IN...";
         yield return new WaitForSeconds(3.0f);
 
+        Debug.Log("3");
+
         _endOfWaveText.text = "3";
         yield return new WaitForSeconds(1.0f);
+
+        Debug.Log("2");
 
         _endOfWaveText.text = "2";
         yield return new WaitForSeconds(1.0f);
 
+        Debug.Log("1");
+
         _endOfWaveText.text = "1";
         yield return new WaitForSeconds(1.0f);
 
-        _endOfWaveText.gameObject.SetActive(false);
+        Debug.Log("Start!");
+
+        //_endOfWaveText.gameObject.SetActive(false);
+
 
     }
 }

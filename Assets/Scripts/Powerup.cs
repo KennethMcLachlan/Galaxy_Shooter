@@ -14,12 +14,14 @@ public class Powerup : MonoBehaviour
     [SerializeField]
     private GameObject Player;
 
+
     [SerializeField]
     //0 = Triple Shot | 1 = Speed | 2 = Shield | 3 = Ammo | 4 = Extra Life | 5 = Star Power | 6 = Anti-Power-up
     private int powerupID;
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
+
         
     }
 
@@ -85,6 +87,12 @@ public class Powerup : MonoBehaviour
             }
 
             Destroy(gameObject);
+        }
+
+        if (other.tag == "Laser")
+        {
+            gameObject.GetComponent<SpriteRenderer>().material.color = Color.red;
+            Destroy(gameObject, 1.0f);
         }
     }
 
