@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using TMPro.EditorUtilities;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -57,9 +56,6 @@ public class SpawnManager : MonoBehaviour
         
         while (_stopSpawning == false)
         {
-            
-            
-
             //Wave 1
 
             for (int i = 10; i > 0; i--)
@@ -185,8 +181,9 @@ public class SpawnManager : MonoBehaviour
             }
             Debug.Log("End of second wave");
 
+            _uiManager.StartUpdateWavesCoroutine();
             //StartUpdateWavesCoroutine();
-            
+
             yield return new WaitForSeconds(9.0f);
 
             //Wave 3
@@ -230,8 +227,9 @@ public class SpawnManager : MonoBehaviour
             }
             Debug.Log("End of thrid wave");
 
+            _uiManager.StartUpdateWavesCoroutine();
             //StartUpdateWavesCoroutine();
-            
+
             yield return new WaitForSeconds(9.0f);
 
             //Wave 4

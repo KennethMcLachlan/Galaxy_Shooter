@@ -179,6 +179,7 @@ public class Enemy : MonoBehaviour
             {
                 _ramRange = 0;
                 gameObject.GetComponent<SpriteRenderer>().material.color = Color.white;
+                _canFire = 0;
             }
 
             _anim.SetTrigger("OnEnemyDeath");
@@ -207,6 +208,7 @@ public class Enemy : MonoBehaviour
             {
                 _ramRange = 0;
                 gameObject.GetComponent<SpriteRenderer>().material.color = Color.white;
+                _canFire = 0;
             }
 
             _anim.SetTrigger("OnEnemyDeath");
@@ -234,6 +236,7 @@ public class Enemy : MonoBehaviour
             {
                 _ramRange = 0;
                 gameObject.GetComponent<SpriteRenderer>().material.color = Color.white;
+                _canFire = 0;
             }
 
             _anim.SetTrigger("OnEnemyDeath");

@@ -155,6 +155,7 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
 
         Debug.Log("Start!");
+        _endOfWaveText.gameObject.SetActive(false);
 
         //_endOfWaveText.gameObject.SetActive(false);
 
