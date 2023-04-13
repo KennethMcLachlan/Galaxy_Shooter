@@ -19,18 +19,42 @@ public class SpawnManager : MonoBehaviour
     private GameObject[] _powerups;
 
     [SerializeField]
-    private GameObject _starPowerup;
-
+    private GameObject _starPower;
+   
     [SerializeField]
     private int _enemySpawnCount;
 
     [SerializeField]
     private TMP_Text _endOfWaveText;
 
-    private bool _waveEnd;
+    [SerializeField]
+    private int _waveOneCount = 10;
+
+    [SerializeField]
+    private int _waveTwoCount = 15;
+
+    [SerializeField]
+    private int _waveThreeCount = 20;
+
+    [SerializeField]
+    private int _waveFourCount = 25;
+
+    [SerializeField]
+    private float _waveOneSpeed = 3.0f;
+
+    [SerializeField]
+    private float _waveTwoSpeed = 2.5f;
+
+    [SerializeField]
+    private float _waveThreeSpeed = 2.0f;
+
+    [SerializeField]
+    private float _waveFourSpeed = 1.5f;
 
     [SerializeField]
     private UIManager _uiManager;
+
+
    
 
 
@@ -38,13 +62,15 @@ public class SpawnManager : MonoBehaviour
     {
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
 
-        //StartCoroutine(UpdateWavesCountDownRoutine());
-
         StartCoroutine(SpawnEnemyRoutine());
 
         StartCoroutine(SpawnPowerupRoutine());
 
         StartCoroutine(SpawnStarPowerRoutine());
+
+        StartCoroutine(SpawnAmmoFillRoutine());
+
+        StartCoroutine(SpawnHealthRoutine());
     }
     void Update()
     {
@@ -58,7 +84,7 @@ public class SpawnManager : MonoBehaviour
         {
             //Wave 1
 
-            for (int i = 10; i > 0; i--)
+            for (int waveCount = _waveOneCount; waveCount > 0; waveCount--)
             {
                 int _randomSpawnLocation = Random.Range(0, 3);
 
@@ -87,62 +113,25 @@ public class SpawnManager : MonoBehaviour
 
                 }
 
-                yield return new WaitForSeconds(3.0f);
+                yield return new WaitForSeconds(_waveOneSpeed);
 
-                if (i == 0)
+                if (waveCount == 0)
                 {
                     break;
                 }
 
             }
             
-            
             Debug.Log("End of first wave");
 
             _uiManager.StartUpdateWavesCoroutine();
-            /*
-            _endOfWaveText.gameObject.SetActive(true);
-
-            _endOfWaveText.text = "END OF WAVE";
-            yield return new WaitForSeconds(3.0f);
-
-            _endOfWaveText.text = "NEXT WAVE IN...";
-            yield return new WaitForSeconds(3.0f);
-
-            _endOfWaveText.text = "3";
-            yield return new WaitForSeconds(1.0f);
-
-            _endOfWaveText.text = "2";
-            yield return new WaitForSeconds(1.0f);
-
-            _endOfWaveText.text = "1";
-            yield return new WaitForSeconds(1.0f);
-
-            _endOfWaveText.gameObject.SetActive(false);
-            
-            _waveEnd = true;
-
-            if (_waveEnd == true)
-            {
-                _uiManager.StartUpdateWavesCoroutine();
-            }
-
-            _waveEnd = false;
-            
-
-
-            // StartCoroutine(UpdateWavesCountDownRoutine());
-            //_waveEnd = false;
-
-
-            //_waveEnd = false;
-            */
+           
 
             yield return new WaitForSeconds(9.0f);
 
             //Wave 2
 
-            for (int i = 20; i > 0; i--)
+            for (int waveCount = _waveTwoCount; waveCount > 0; waveCount--)
             {
                 int _randomSpawnLocation = Random.Range(0, 3);
 
@@ -171,9 +160,9 @@ public class SpawnManager : MonoBehaviour
 
                 }
 
-                yield return new WaitForSeconds(2.0f);
+                yield return new WaitForSeconds(_waveTwoSpeed);
 
-                if (i == 0)
+                if (waveCount == 0)
                 {
                     break;
                 }
@@ -182,13 +171,12 @@ public class SpawnManager : MonoBehaviour
             Debug.Log("End of second wave");
 
             _uiManager.StartUpdateWavesCoroutine();
-            //StartUpdateWavesCoroutine();
 
             yield return new WaitForSeconds(9.0f);
 
             //Wave 3
 
-            for (int i = 30; i > 0; i--)
+            for (int waveCount = _waveThreeCount; waveCount > 0; waveCount--)
             {
                 int _randomSpawnLocation = Random.Range(0, 3);
 
@@ -217,24 +205,23 @@ public class SpawnManager : MonoBehaviour
 
                 }
 
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(_waveThreeSpeed);
 
-                if (i == 0)
+                if (waveCount == 0)
                 {
                     break;
                 }
 
             }
-            Debug.Log("End of thrid wave");
+            Debug.Log("End of third wave");
 
             _uiManager.StartUpdateWavesCoroutine();
-            //StartUpdateWavesCoroutine();
 
             yield return new WaitForSeconds(9.0f);
 
             //Wave 4
 
-            for (int i = 35; i > 0; i--)
+            for (int waveCount = _waveFourCount; waveCount > 0; waveCount--)
             {
                 int _randomSpawnLocation = Random.Range(0, 3);
 
@@ -263,9 +250,9 @@ public class SpawnManager : MonoBehaviour
 
                 }
 
-                yield return new WaitForSeconds(0.75f);
+                yield return new WaitForSeconds(_waveFourSpeed);
 
-                if (i == 0)
+                if (waveCount == 0)
                 {
 
                     break;
@@ -273,8 +260,6 @@ public class SpawnManager : MonoBehaviour
 
             }
             Debug.Log("End of fourth wave");
-
-            //StartUpdateWavesCoroutine();
 
             yield return new WaitForSeconds(9.0f);
 
@@ -305,52 +290,43 @@ public class SpawnManager : MonoBehaviour
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
 
-            Instantiate(_starPowerup, posToSpawn, Quaternion.identity);
+            Instantiate(_starPower, posToSpawn, Quaternion.identity);
 
             yield return new WaitForSeconds(Random.Range(30f, 60f));
 
         }
     }
 
+    IEnumerator SpawnAmmoFillRoutine()
+    {
+        yield return new WaitForSeconds(10f);
+
+        while (_stopSpawning == false)
+        {
+            Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
+
+            Instantiate(_powerups[3], posToSpawn, Quaternion.identity);
+
+            yield return new WaitForSeconds(Random.Range(15f, 25f));
+        }
+    }
+
+    IEnumerator SpawnHealthRoutine()
+    {
+        yield return new WaitForSeconds(30f);
+
+        while (_stopSpawning == false)
+        {
+            Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
+
+            Instantiate(_powerups[4], posToSpawn, Quaternion.identity);
+
+            yield return new WaitForSeconds(Random.Range(30f, 45f));
+        }
+    }
     public void OnPlayerDeath()
     {
         _stopSpawning = true;
     }
 
-    
-    /*
-    IEnumerator UpdateWavesCountDownRoutine()
-    {
-        Debug.Log("WavesCoroutine has begun");
-
-        while (_waveEnd == true)
-        {
-            _endOfWaveText.gameObject.SetActive(true);
-
-            _endOfWaveText.text = "END OF WAVE";
-            yield return new WaitForSeconds(3.0f);
-
-            _endOfWaveText.text = "NEXT WAVE IN...";
-            yield return new WaitForSeconds(3.0f);
-
-            _endOfWaveText.text = "3";
-            yield return new WaitForSeconds(1.0f);
-
-            _endOfWaveText.text = "2";
-            yield return new WaitForSeconds(1.0f);
-
-            _endOfWaveText.text = "1";
-            yield return new WaitForSeconds(1.0f);
-
-            _endOfWaveText.gameObject.SetActive(false);
-        
-        }
-
-        _waveEnd = false;
-
-
-        
-
-        
-    }*/
 }

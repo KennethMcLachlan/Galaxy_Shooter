@@ -44,10 +44,6 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     public SpawnManager _spawnManager;
 
-    private bool _waveIsOver;
-
-
-    
     void Start()
     {
         _thrusterText.text = 100 + "%".ToString();
@@ -73,6 +69,7 @@ public class UIManager : MonoBehaviour
     public void UpdateAmmoCount(int playerAmmoCount)
     {
         _ammoCountNumber.text = playerAmmoCount.ToString();
+
     }
 
     public void UpdateLives(int currentLives)
@@ -115,13 +112,7 @@ public class UIManager : MonoBehaviour
     
     public void StartUpdateWavesCoroutine()
     {
-        Debug.Log("Update Waves Coroutine has Begun");
-
-        //_endOfWaveText.gameObject.SetActive(true);
         StartCoroutine(UpdateWavesCountDownRoutine());
-        //_endOfWaveText.gameObject.SetActive(false);
-        //return;
-        
     }
 
     IEnumerator UpdateWavesCountDownRoutine()
@@ -129,36 +120,22 @@ public class UIManager : MonoBehaviour
 
         _endOfWaveText.gameObject.SetActive(true);
 
-        Debug.Log("End of Wave");
-
         _endOfWaveText.text = "END OF WAVE";
         yield return new WaitForSeconds(3.0f);
-
-        Debug.Log("Next wave in...");
 
         _endOfWaveText.text = "NEXT WAVE IN...";
         yield return new WaitForSeconds(3.0f);
 
-        Debug.Log("3");
-
         _endOfWaveText.text = "3";
         yield return new WaitForSeconds(1.0f);
-
-        Debug.Log("2");
 
         _endOfWaveText.text = "2";
         yield return new WaitForSeconds(1.0f);
 
-        Debug.Log("1");
-
         _endOfWaveText.text = "1";
         yield return new WaitForSeconds(1.0f);
 
-        Debug.Log("Start!");
         _endOfWaveText.gameObject.SetActive(false);
-
-        //_endOfWaveText.gameObject.SetActive(false);
-
 
     }
 }

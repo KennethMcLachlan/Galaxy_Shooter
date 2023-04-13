@@ -270,6 +270,7 @@ public class Player : MonoBehaviour
             _ammoCount = _ammoRange;
         }
 
+        
         if (_ammoCount <= 5)
         {
             _ammoCountText.GetComponent<TMP_Text>().color = Color.red;
@@ -287,6 +288,7 @@ public class Player : MonoBehaviour
 
         else _ammoCountText.GetComponent<TMP_Text>().color = Color.white;
         
+        
         _uiManager.UpdateAmmoCount(_ammoCount);
 
     }
@@ -300,10 +302,12 @@ public class Player : MonoBehaviour
 
         if (_isShieldPowerupActive == true)
         {
-            _shieldVisualizer.GetComponent<SpriteRenderer>().material.color = Color.white;
+            if (_shieldLives == 3)
+            {
+                _shieldVisualizer.GetComponent<SpriteRenderer>().material.color = Color.white;
+            }
 
-
-            if (_shieldLives == 2)
+            else if (_shieldLives == 2)
             {
                 _shieldVisualizer.GetComponent<SpriteRenderer>().material.color = Color.green;
             }
@@ -353,7 +357,7 @@ public class Player : MonoBehaviour
 
     IEnumerator TripleShotPowerDownRoutine()
     {
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(10.0f);
         _isTripleShotActive = false;
     }
 
@@ -375,6 +379,10 @@ public class Player : MonoBehaviour
 
     public void ShieldPowerupActive()
     {
+        _shieldLives = 3;
+
+        _shieldVisualizer.GetComponent<SpriteRenderer>().material.color = Color.white;
+
         _isShieldPowerupActive = true;
 
         _shieldVisualizer.SetActive(true);

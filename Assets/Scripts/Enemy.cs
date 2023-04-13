@@ -69,6 +69,8 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        
+
         switch (_enemyDirection)
         {
             case 0:
@@ -103,9 +105,7 @@ public class Enemy : MonoBehaviour
         if (_player != null)
         {
             _distance = Vector3.Distance(_player.transform.position, transform.position);
-
         }
-        
 
         if (_distance <= _ramRange)
         {
@@ -117,7 +117,6 @@ public class Enemy : MonoBehaviour
             
         }
         else gameObject.GetComponent<SpriteRenderer>().material.color = Color.white;
-
         
     }
 
