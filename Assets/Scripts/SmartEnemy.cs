@@ -1,13 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class SmartEnemy : MonoBehaviour
 {
-    
+    [SerializeField]
+    public GameObject _shieldVisualizer;
+
+    private bool _isShieldActive;
+
+    [SerializeField]
+    private int _shieldLives = 2;
+
+    [SerializeField]
+    private Animator _explosionAnim;
+
+    [SerializeField]
+    private float _speed = 3.0f;
+
+    [SerializeField]
+    private AudioSource _explosionAudioSource;
+
+    private Player _player;
     void Start()
     {
-        
+        _isShieldActive = true;
+
+        _player = GameObject.Find("Player_Ship").GetComponent<Player>();
+
+        EnemyShield();
     }
 
     
@@ -51,10 +73,66 @@ public class SmartEnemy : MonoBehaviour
         //Instantiate explosion animation
         //Add 500 to score
         //Play.audioSource
+
+        if (gameObject != null)
+        {
+            Debug.Log("Smart Enemy is not NULL");
+            if (other.tag == "Laser" && _isShieldActive == true)
+            {
+                _shieldLives -= 1;
+                Debug.Log("Laser has collided");
+
+            }
+
+            else if (other.tag == "Laser" && _isShieldActive == false)
+            {
+                _explosionAnim.SetTrigger("OnEnemyDeath");
+
+                _speed = 0.0f;
+
+                _explosionAudioSource.Play();
+
+                Destroy(GetComponent<Collider2D>());
+
+                Destroy(gameObject, 2.8f);
+
+                _player.AddScore(500);
+            }
+
+        }
+
     }
 
     private void EnemyShield()
     {
+
+        
+
+        if (_isShieldActive == true)
+        {
+            _shieldVisualizer.SetActive(true);
+
+            if (_shieldLives == 2)
+            {
+                _shieldVisualizer.GetComponent<SpriteRenderer>().material.color = Color.white;
+            }
+            
+            else if (_shieldLives == 1)
+            {
+                _shieldVisualizer.GetComponent<SpriteRenderer>().material.color = Color.red;
+            }
+            
+        }
+
+        else if (_shieldLives < 1)
+        {
+            _shieldVisualizer.SetActive(false);
+            _isShieldActive = false;
+        }
+
+            //_shieldVisualizer.SetActive(false);
+
+        
         //Enemy shield has two lives
         //If Shield life is == 0 then SetActive(false)
 
@@ -73,4 +151,6 @@ public class SmartEnemy : MonoBehaviour
         //Maybe CoRoutine is unnecessary?
     }
     */
+
+    
 }

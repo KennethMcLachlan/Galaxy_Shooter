@@ -932,6 +932,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShieldVisualizer
       objectReference: {fileID: 0}
+    - target: {fileID: 4353454064445300087, guid: 0fbb90a5d307fd447ab7d0ba3aaeef62, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0fbb90a5d307fd447ab7d0ba3aaeef62, type: 3}
 --- !u!4 &3076940199591264472 stripped
