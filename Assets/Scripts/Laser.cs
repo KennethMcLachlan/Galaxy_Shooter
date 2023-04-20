@@ -80,6 +80,11 @@ public class Laser : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+
+        if (other.tag == "Dodge_Detector")
+        {
+            SmartEnemy dodgeDetector = other.GetComponentInChildren<SmartEnemy>();
+        }
     }
     
 }

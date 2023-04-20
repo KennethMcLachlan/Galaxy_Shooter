@@ -11,6 +11,7 @@ TagManager:
   - Asteroid
   - Laser_Beam
   - Enemy_Shield
+  - Dodge_Detector
   layers:
   - Default
   - TransparentFX

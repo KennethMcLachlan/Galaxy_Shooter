@@ -8,6 +8,9 @@ public class SmartEnemy : MonoBehaviour
     [SerializeField]
     public GameObject _shieldVisualizer;
 
+    [SerializeField]
+    public GameObject _dodgeDetector;
+
     private bool _isShieldActive;
 
     [SerializeField]
@@ -42,8 +45,8 @@ public class SmartEnemy : MonoBehaviour
     
     void Update()
     {
-        if (_dodging == 0)
-        {
+        //if (_dodging == 0)
+        
 
             switch (_smartEnemyDirection)
             {
@@ -62,13 +65,14 @@ public class SmartEnemy : MonoBehaviour
                 default:
                     break;
             }
-        }
-
+        
+        /*
         else if (_dodging == 1 || _dodging == 2)
         {
             Dodge();
             StartCoroutine(EndDodgeRoutine());
         }
+        */
     }
 
     IEnumerator EnemyMovementLeft()
@@ -139,7 +143,20 @@ public class SmartEnemy : MonoBehaviour
     }
     private void Dodge()
     {
-       if (_dodging == 1)
+        int randomDodgeDirection = Random.Range(0, 1);
+
+        switch (randomDodgeDirection)
+        {
+            case 0:
+                transform.Translate(Vector3.right * (_speed * 2) * Time.deltaTime);
+                break;
+            case 1:
+                transform.Translate(Vector3.left * (_speed * 2) * Time.deltaTime);
+                break;
+        }
+        /*
+
+        if (_dodging == 1)
         {
             transform.Translate(Vector3.right * (_speed * 2) * Time.deltaTime);
         }
@@ -148,6 +165,7 @@ public class SmartEnemy : MonoBehaviour
         {
             transform.Translate(Vector3.left * (_speed * 2) * Time.deltaTime);
         }
+        */
         //Random.Range 0,1 to determine direction enemy will dodge.
         //Enemy Avoids Shot
         //If dodge == 1 then move left
@@ -203,6 +221,7 @@ public class SmartEnemy : MonoBehaviour
         }
 
     }
+
 
     public void EnemyShield()
     {
