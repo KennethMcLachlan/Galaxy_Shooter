@@ -132,7 +132,7 @@ public class SpawnManager : MonoBehaviour
             _uiManager.StartUpdateWavesCoroutine();
            
 
-            yield return new WaitForSeconds(9.0f);
+            yield return new WaitForSeconds(11.0f);
 
             //Wave 2
 
@@ -177,7 +177,7 @@ public class SpawnManager : MonoBehaviour
 
             _uiManager.StartUpdateWavesCoroutine();
 
-            yield return new WaitForSeconds(9.0f);
+            yield return new WaitForSeconds(11.0f);
 
             //Wave 3
 
@@ -222,7 +222,7 @@ public class SpawnManager : MonoBehaviour
 
             _uiManager.StartUpdateWavesCoroutine();
 
-            yield return new WaitForSeconds(9.0f);
+            yield return new WaitForSeconds(11.0f);
 
             //Wave 4
 
@@ -266,7 +266,7 @@ public class SpawnManager : MonoBehaviour
             }
             Debug.Log("End of fourth wave");
 
-            yield return new WaitForSeconds(9.0f);
+            yield return new WaitForSeconds(11.0f);
 
         }
     }
@@ -276,7 +276,7 @@ public class SpawnManager : MonoBehaviour
         
         while (_stopSpawning == false)
         {
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(5f);
 
             Debug.Log("SmartEnemy has Spawned");
 

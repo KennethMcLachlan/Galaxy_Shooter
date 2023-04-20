@@ -83,7 +83,24 @@ public class Laser : MonoBehaviour
 
         if (other.tag == "Dodge_Detector")
         {
+            Debug.Log("Dodge detector penetrated");
             SmartEnemy dodgeDetector = other.GetComponentInChildren<SmartEnemy>();
+
+            Debug.Log("SmartEnemyComponent grabbed");
+
+            if (dodgeDetector != null)
+            {
+                Debug.Log("Dodge Method Called");
+                dodgeDetector.Dodge();
+
+            }
+            else Debug.Log("dodgeDetector is NULL");
+
+            if (dodgeDetector == null)
+            {
+                Debug.Log("That shits still NULL");
+            }
+
         }
     }
     

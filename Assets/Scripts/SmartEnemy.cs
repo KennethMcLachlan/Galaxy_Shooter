@@ -16,14 +16,17 @@ public class SmartEnemy : MonoBehaviour
     [SerializeField]
     private int _shieldLives = 2;
 
+    //[SerializeField]
+    //private Animator _explosionAnim;
+
     [SerializeField]
-    private Animator _explosionAnim;
+    private GameObject _explosionPrefab;
 
     [SerializeField]
     private float _speed = 3.0f;
 
-    [SerializeField]
-    private AudioSource _explosionAudioSource;
+    //[SerializeField]
+   // private AudioSource _explosionAudioSource;
 
     private Player _player;
 
@@ -39,6 +42,8 @@ public class SmartEnemy : MonoBehaviour
         _isShieldActive = true;
 
         _player = GameObject.Find("Player_Ship").GetComponent<Player>();
+
+        
 
     }
 
@@ -81,7 +86,7 @@ public class SmartEnemy : MonoBehaviour
 
         if (transform.position.x == -4f)
         {
-            _speed = 0f;
+            //_speed = 0f;
             yield return new WaitForSeconds(2.5f);
             _speed = 3f;
             transform.Translate(Vector3.down * (_speed * 3.0f) * Time.deltaTime);
@@ -91,11 +96,6 @@ public class SmartEnemy : MonoBehaviour
         //Waits for seconds
         //Continues movement 
 
-        //or
-
-        //Use Waypoints to determine movement
-        //Switch Statement to determine which waypoint is used
-        //Random.Range for random waypoint appearances
     }
 
     IEnumerator EnemyMovementRight()
@@ -104,7 +104,7 @@ public class SmartEnemy : MonoBehaviour
 
         if (transform.position.x == 4f)
         {
-            _speed = 0f;
+            //_speed = 0f;
             yield return new WaitForSeconds(2.5f);
             _speed = 3f;
             transform.Translate(Vector3.down * (_speed * 3.0f) * Time.deltaTime);
@@ -117,7 +117,7 @@ public class SmartEnemy : MonoBehaviour
 
         if (transform.position.y == 0 )
         {
-            _speed = 0;
+            //_speed = 0;
             yield return new WaitForSeconds(2.5f);
             _speed = 3.0f;
             transform.Translate(Vector3.left * (_speed * 3.0f) * Time.deltaTime);
@@ -130,7 +130,7 @@ public class SmartEnemy : MonoBehaviour
 
         if (transform.position.y == 0)
         {
-            _speed = 0f;
+            //_speed = 0f;
             yield return new WaitForSeconds(2.5f);
             _speed = 3f;
             transform.Translate(Vector3.right * (_speed * 3.0f) * Time.deltaTime);
@@ -141,17 +141,22 @@ public class SmartEnemy : MonoBehaviour
     {
         _smartEnemyDirection = direction;
     }
-    private void Dodge()
+    public void Dodge()
     {
+
+        Debug.Log("Dodge Method is initiated");
+
         int randomDodgeDirection = Random.Range(0, 1);
 
         switch (randomDodgeDirection)
         {
             case 0:
-                transform.Translate(Vector3.right * (_speed * 2) * Time.deltaTime);
+                gameObject.transform.Translate(Vector3.right * (_speed * 2) * Time.deltaTime);
+                //StartCoroutine(EndDodgeRoutine());
                 break;
             case 1:
-                transform.Translate(Vector3.left * (_speed * 2) * Time.deltaTime);
+                gameObject.transform.Translate(Vector3.left * (_speed * 2) * Time.deltaTime);
+                //StartCoroutine(EndDodgeRoutine());
                 break;
         }
         /*
@@ -175,9 +180,9 @@ public class SmartEnemy : MonoBehaviour
     
     IEnumerator EndDodgeRoutine()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         _dodging = (Random.Range(1, 2));
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         _dodging = 0;
         
         //Coroutine decides how long before the enemy will dodge again?
@@ -194,31 +199,49 @@ public class SmartEnemy : MonoBehaviour
 
         if (gameObject != null)
         {
+            
+
             Debug.Log("Smart Enemy is not NULL");
-            if (other.tag == "Laser" && _isShieldActive == true)
+
+            if (other.tag == "Laser" && _isShieldActive == true && _shieldLives > 0)
             {
                 EnemyShield();
 
+                //_shieldLives -= 1;
+
                 Debug.Log("Laser has collided");
+
+                Destroy(other.gameObject);
+
+                return;
 
             }
 
-            if (other.tag == "Laser" && _isShieldActive == false)
+            if (other.tag == "Laser" && _shieldLives <= 0 && _isShieldActive == false)
             {
-                _explosionAnim.SetTrigger("OnEnemyDeath");
+
+                //_explosionAnim.SetTrigger("OnEnemyDeath");
+
+                Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
 
                 _speed = 0.0f;
 
-                _explosionAudioSource.Play();
+                gameObject.GetComponent<AudioSource>().Play();
+
+                Destroy(other.gameObject);
+
+                GameObject.Find("Main Camera").GetComponent<CameraShake>().StartShake();
 
                 Destroy(GetComponent<Collider2D>());
 
-                Destroy(gameObject, 2.8f);
+                Destroy(gameObject, 0.2f);
+
+                Debug.Log("Smart enemy has been vanquished");
 
                 _player.AddScore(500);
             }
-
         }
+        
 
     }
 
@@ -232,7 +255,7 @@ public class SmartEnemy : MonoBehaviour
         {
             _shieldVisualizer.SetActive(true);
 
-            if (_shieldLives == 2)
+            if (_shieldLives >= 2)
             {
                 _shieldVisualizer.GetComponent<SpriteRenderer>().material.color = Color.white;
             }
@@ -241,14 +264,15 @@ public class SmartEnemy : MonoBehaviour
             {
                 _shieldVisualizer.GetComponent<SpriteRenderer>().material.color = Color.red;
             }
-            
+
+            else if (_shieldLives == 0)
+            {
+                _shieldVisualizer.SetActive(false);
+                _isShieldActive = false;
+            }
         }
 
-        else if (_shieldLives < 1)
-        {
-            _shieldVisualizer.SetActive(false);
-            _isShieldActive = false;
-        }
+        
 
             //_shieldVisualizer.SetActive(false);
 
