@@ -150,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bombExplosionPrefab: {fileID: 7179215694099230422, guid: 96804ac244b59e340ae09fddc86b70cb, type: 3}
   _target: {fileID: 3076940199602077477, guid: a0b753699d542cb4b84d6d029a30617f, type: 3}
-  _movementSpeed: 3
+  _movementSpeed: 4
   player: {fileID: 0}
 --- !u!82 &2471437940009268015
 AudioSource:

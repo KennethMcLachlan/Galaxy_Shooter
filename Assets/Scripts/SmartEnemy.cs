@@ -73,11 +73,9 @@ public class SmartEnemy : MonoBehaviour
         {
             case 0: // Dodge Right
                 transform.Translate(Vector3.right * (_dodgeSpeed) * Time.deltaTime);
-                Debug.Log("Enemy Dodged Right");
                 break;
             case 1: // Dodge Left
                 transform.Translate(Vector3.left * (_dodgeSpeed) * Time.deltaTime);
-                Debug.Log("Enemy Dodged Left");
                 break;
             case 2: //Not Dodging
                 switch (_smartEnemyDirection)
@@ -171,17 +169,6 @@ public class SmartEnemy : MonoBehaviour
         }
 
     }
-
-    /*
-    IEnumerator BombRoutine()
-    {
-        yield return new WaitForSeconds(1.5f);
-        _homingBombPrefab.SetActive(true);
-        Instantiate(_homingBombPrefab, transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(1.5f);
-
-    }
-    */
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -321,8 +308,6 @@ public class SmartEnemy : MonoBehaviour
         _dodgeState = Random.Range(0, 3);
         StartCoroutine(DodgeCoolDownRoutine());
     }
-
-
 
     IEnumerator DodgeCoolDownRoutine()
     {

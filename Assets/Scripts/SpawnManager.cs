@@ -275,8 +275,6 @@ public class SpawnManager : MonoBehaviour
         {
             yield return new WaitForSeconds(Random.Range(15f, 25f));
 
-            Debug.Log("SmartEnemy has Spawned");
-
             int _randomSpawnLocation = Random.Range(0, 3);
 
             switch (_randomSpawnLocation)
