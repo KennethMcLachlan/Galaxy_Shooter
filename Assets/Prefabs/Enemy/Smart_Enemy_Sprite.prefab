@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 395693786}
   - component: {fileID: 395693787}
+  - component: {fileID: 877089788}
+  - component: {fileID: 877089787}
   m_Layer: 0
   m_Name: Dodge_Detector
   m_TagString: Dodge_Detector
@@ -58,6 +60,39 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6.148485, y: 8.033545}
   m_EdgeRadius: 0
+--- !u!50 &877089788
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395693785}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &877089787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395693785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfe0077f71c13b64bba82b79435e070d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3366718384534776084
 GameObject:
   m_ObjectHideFlags: 0
@@ -301,8 +336,13 @@ MonoBehaviour:
   _shieldVisualizer: {fileID: 668325869352763729}
   _dodgeDetector: {fileID: 395693785}
   _shieldLives: 2
+  _ramRange: 3.5
+  _ramSpeed: 2
   _explosionPrefab: {fileID: 4960581075948737496, guid: 78f7cb07a93298f42b73a892fbdb5798, type: 3}
-  _speed: 3
+  _speed: 1.5
+  _dodgeSpeed: 5
+  _homingBombPrefab: {fileID: 8932341581801898258, guid: 769367f2f4ef65d4ca30cedf23a27834, type: 3}
+  _fireRate: 5
 --- !u!50 &9106330676025791141
 Rigidbody2D:
   serializedVersion: 4
@@ -446,6 +486,10 @@ PrefabInstance:
     - target: {fileID: 4353454064445300085, guid: 0fbb90a5d307fd447ab7d0ba3aaeef62, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4353454064445300085, guid: 0fbb90a5d307fd447ab7d0ba3aaeef62, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.27
       objectReference: {fileID: 0}
     - target: {fileID: 4353454064445300085, guid: 0fbb90a5d307fd447ab7d0ba3aaeef62, type: 3}
       propertyPath: m_LocalScale.y

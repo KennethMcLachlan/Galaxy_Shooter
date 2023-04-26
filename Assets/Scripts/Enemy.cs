@@ -43,6 +43,8 @@ public class Enemy : MonoBehaviour
 
     private bool _enemyIsDead;
 
+    private bool _enemyIsFiring;
+
     
     
 

@@ -16,7 +16,7 @@ public class Powerup : MonoBehaviour
 
 
     [SerializeField]
-    //0 = Triple Shot | 1 = Speed | 2 = Shield | 3 = Ammo | 4 = Extra Life | 5 = Star Power | 6 = Anti-Power-up
+    //0 = Triple Shot | 1 = Speed | 2 = Shield | 3 = Blank Slate | 4 = Anti-Power-Up
     private int powerupID;
     void Start()
     {
@@ -79,6 +79,8 @@ public class Powerup : MonoBehaviour
                         break;
                     case 6:
                         player.AntiPower();
+                        break;
+                    case 7: //Left blank for random no spawn
                         break;
                     default:
                         Debug.Log("Default Value");

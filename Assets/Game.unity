@@ -1028,63 +1028,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9fe6f40efddf0b64fb68a3382b14a4db, type: 3}
   _thrusterSprite: {fileID: 21300000, guid: d78517b813bc913418083c4966d7ba05, type: 3}
   _spawnManager: {fileID: 0}
---- !u!1001 &1263469328
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3853068399393253160, guid: b60066bae1fde234cb3981fd4c537813, type: 3}
-      propertyPath: m_RootOrder
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 3853068399393253160, guid: b60066bae1fde234cb3981fd4c537813, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -3.17
-      objectReference: {fileID: 0}
-    - target: {fileID: 3853068399393253160, guid: b60066bae1fde234cb3981fd4c537813, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.73
-      objectReference: {fileID: 0}
-    - target: {fileID: 3853068399393253160, guid: b60066bae1fde234cb3981fd4c537813, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3853068399393253160, guid: b60066bae1fde234cb3981fd4c537813, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3853068399393253160, guid: b60066bae1fde234cb3981fd4c537813, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3853068399393253160, guid: b60066bae1fde234cb3981fd4c537813, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3853068399393253160, guid: b60066bae1fde234cb3981fd4c537813, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3853068399393253160, guid: b60066bae1fde234cb3981fd4c537813, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3853068399393253160, guid: b60066bae1fde234cb3981fd4c537813, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3853068399393253160, guid: b60066bae1fde234cb3981fd4c537813, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6009827489966926487, guid: b60066bae1fde234cb3981fd4c537813, type: 3}
-      propertyPath: m_Name
-      value: Smart_Enemy_Sprite
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b60066bae1fde234cb3981fd4c537813, type: 3}
 --- !u!1001 &1273552381
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1187,32 +1130,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 930593119539600406, guid: 3802e4fb71ca1e64cbceda5812d75fcc, type: 3}
   m_PrefabInstance: {fileID: 1273552381}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1292571994 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 395693785, guid: b60066bae1fde234cb3981fd4c537813, type: 3}
-  m_PrefabInstance: {fileID: 1263469328}
-  m_PrefabAsset: {fileID: 0}
---- !u!50 &1292571997
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1292571994}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &1361906636
 GameObject:
   m_ObjectHideFlags: 0
@@ -1463,6 +1380,7 @@ MonoBehaviour:
   - {fileID: 3160137172044349453, guid: 635d0cc93435a8f4787ea324016adaee, type: 3}
   - {fileID: 777765551181882361, guid: 133fe5138e301e7499f39fc66c8eb9be, type: 3}
   - {fileID: 626028990494303054, guid: ea0bf262d589dfa4b8e628a1e81127d8, type: 3}
+  - {fileID: 1370803147623337585, guid: 46b050f4d182bfe4a9b0bc73edb2eb58, type: 3}
   - {fileID: 160640745274356218, guid: fd040a4faf18f8e41b68439ac7ce9906, type: 3}
   _starPower: {fileID: 1994377994204222254, guid: 26ed752ff0344d8428c65824bc4fcb29, type: 3}
   _enemySpawnCount: 10

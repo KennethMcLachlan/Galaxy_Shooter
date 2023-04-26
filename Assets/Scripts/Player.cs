@@ -460,6 +460,7 @@ public class Player : MonoBehaviour
             _fireLeftEngine.SetActive(true);
             _fireRightEngine.SetActive(true);
         }
+
     }
     
     public void AddScore(int points)

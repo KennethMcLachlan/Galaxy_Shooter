@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
@@ -16,200 +17,182 @@ public class SmartEnemy : MonoBehaviour
     [SerializeField]
     private int _shieldLives = 2;
 
-    //[SerializeField]
-    //private Animator _explosionAnim;
+    private float _distance;
+
+    [SerializeField]
+    private float _ramRange = 3.5f;
+
+    [SerializeField]
+    private float _ramSpeed = 1.75f;
 
     [SerializeField]
     private GameObject _explosionPrefab;
 
     [SerializeField]
-    private float _speed = 3.0f;
-
-    //[SerializeField]
-   // private AudioSource _explosionAudioSource;
+    private float _speed = 1f;
 
     private Player _player;
 
     private int _smartEnemyDirection;
 
-    // Smart Enemy Dodge
+    private int _dodgeState = 2;
 
-    private int _dodging = 0;
+    [SerializeField]
+    private float _dodgeSpeed = 5f;
 
-    private bool _canDodge;
+    [SerializeField]
+    public GameObject _homingBombPrefab;
+
+    [SerializeField]
+    private float _fireRate = 3.0f;
+
+    private float _canFire = -1f;
+
     void Start()
     {
         _isShieldActive = true;
 
         _player = GameObject.Find("Player_Ship").GetComponent<Player>();
 
-        
-
     }
 
     
     void Update()
     {
-        //if (_dodging == 0)
+        EnemyMovement();
+
+        SmartEnemyRam();
+
+        EnemyBombFire();
+    }
+
+    public void EnemyMovement()
+    {
+
+        switch (_dodgeState)
+        {
+            case 0: // Dodge Right
+                transform.Translate(Vector3.right * (_dodgeSpeed) * Time.deltaTime);
+                Debug.Log("Enemy Dodged Right");
+                break;
+            case 1: // Dodge Left
+                transform.Translate(Vector3.left * (_dodgeSpeed) * Time.deltaTime);
+                Debug.Log("Enemy Dodged Left");
+                break;
+            case 2: //Not Dodging
+                switch (_smartEnemyDirection)
+                {
+                    case 0:
+                        EnemyMovementDownOne();
+                        break;
+                    case 1:
+                        EnemyMovementDownTwo();
+                        break;
+                    case 2:
+                        EnemyMovementLeft();
+                        break;
+                    case 3:
+                        EnemyMovementRight();
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+
+        }
+    }
+    private void EnemyMovementLeft()
+    {
+        transform.Translate(Vector3.left * (_speed) * Time.deltaTime);
+
+        if (transform.position.x < -11f)
+        {
+            float randomY = Random.Range(-1.0f, 5.5f);
+            transform.position = new Vector3(11f, randomY, 0);
+        }
+
+    }
+
+    private void EnemyMovementRight()
+    {
+        transform.Translate(Vector3.right * (_speed) * Time.deltaTime);
+
+        if (transform.position.x > 11f)
+        {
+            float randomY = Random.Range(-1.0f, 5.5f);
+            transform.position = new Vector3(-11f, randomY, 0);
+        }
+
+    }
+
+    private void EnemyMovementDownOne()
+    {
+        transform.Translate(Vector3.down * (_speed) * Time.deltaTime);
+
+        if (transform.position.y < -6f)
+        {
+            float randomX = Random.Range(-9.5f, 9.5f);
+            transform.position = new Vector3(randomX, 7f, 0);
+        }
+
+    }
+
+    private void EnemyMovementDownTwo()
+    {
+        transform.Translate(Vector3.down * (_speed) * Time.deltaTime);
         
-
-            switch (_smartEnemyDirection)
-            {
-                case 0:
-                    EnemyMovementDownOne();
-                    break;
-                case 1:
-                    EnemyMovementDownTwo();
-                    break;
-                case 2:
-                    EnemyMovementLeft();
-                    break;
-                case 3:
-                    EnemyMovementRight();
-                    break;
-                default:
-                    break;
-            }
-        
-        /*
-        else if (_dodging == 1 || _dodging == 2)
+        if (transform.position.y < -6f)
         {
-            Dodge();
-            StartCoroutine(EndDodgeRoutine());
-        }
-        */
-    }
-
-    IEnumerator EnemyMovementLeft()
-    {
-        transform.Translate(Vector3.left * (_speed / 1.5f) * Time.deltaTime);
-
-        if (transform.position.x == -4f)
-        {
-            //_speed = 0f;
-            yield return new WaitForSeconds(2.5f);
-            _speed = 3f;
-            transform.Translate(Vector3.down * (_speed * 3.0f) * Time.deltaTime);
+            float randomX = Random.Range(-9.5f, 9.5f);
+            transform.position = new Vector3(randomX, 7f, 0);
         }
 
-        //Enemy randomly spawns from the left or right.
-        //Waits for seconds
-        //Continues movement 
-
-    }
-
-    IEnumerator EnemyMovementRight()
-    {
-        transform.Translate(Vector3.right * (_speed / 1.5f) * Time.deltaTime);
-
-        if (transform.position.x == 4f)
-        {
-            //_speed = 0f;
-            yield return new WaitForSeconds(2.5f);
-            _speed = 3f;
-            transform.Translate(Vector3.down * (_speed * 3.0f) * Time.deltaTime);
-        }
-    }
-
-    IEnumerator EnemyMovementDownOne()
-    {
-        transform.Translate(Vector3.down * (_speed / 1.5f) * Time.deltaTime);
-
-        if (transform.position.y == 0 )
-        {
-            //_speed = 0;
-            yield return new WaitForSeconds(2.5f);
-            _speed = 3.0f;
-            transform.Translate(Vector3.left * (_speed * 3.0f) * Time.deltaTime);
-        }
-    }
-
-    IEnumerator EnemyMovementDownTwo()
-    {
-        transform.Translate(Vector3.down * (_speed / 1.5f) * Time.deltaTime);
-
-        if (transform.position.y == 0)
-        {
-            //_speed = 0f;
-            yield return new WaitForSeconds(2.5f);
-            _speed = 3f;
-            transform.Translate(Vector3.right * (_speed * 3.0f) * Time.deltaTime);
-        }
     }
 
     public void SmartEnemyDirection(int direction)
     {
         _smartEnemyDirection = direction;
     }
-    public void Dodge()
+
+    public void EnemyBombFire()
     {
+        SmartMissile smartMissile = GetComponentInChildren<SmartMissile>();
 
-        Debug.Log("Dodge Method is initiated");
-
-        int randomDodgeDirection = Random.Range(0, 1);
-
-        switch (randomDodgeDirection)
+        if (Time.time > _canFire)
         {
-            case 0:
-                gameObject.transform.Translate(Vector3.right * (_speed * 2) * Time.deltaTime);
-                //StartCoroutine(EndDodgeRoutine());
-                break;
-            case 1:
-                gameObject.transform.Translate(Vector3.left * (_speed * 2) * Time.deltaTime);
-                //StartCoroutine(EndDodgeRoutine());
-                break;
-        }
-        /*
+            _fireRate = Random.Range(2.0f, 5.5f);
+            _canFire = Time.time + _fireRate;
 
-        if (_dodging == 1)
-        {
-            transform.Translate(Vector3.right * (_speed * 2) * Time.deltaTime);
+            Instantiate(_homingBombPrefab, transform.position, Quaternion.identity);
+
+            smartMissile.HomingBombBehavior();
         }
-        
-       else if (_dodging == 2)
-        {
-            transform.Translate(Vector3.left * (_speed * 2) * Time.deltaTime);
-        }
-        */
-        //Random.Range 0,1 to determine direction enemy will dodge.
-        //Enemy Avoids Shot
-        //If dodge == 1 then move left
-        //Else if dodge == 2 then move right.
+
     }
 
-    
-    IEnumerator EndDodgeRoutine()
+    /*
+    IEnumerator BombRoutine()
     {
-        yield return new WaitForSeconds(0.3f);
-        _dodging = (Random.Range(1, 2));
-        yield return new WaitForSeconds(0.3f);
-        _dodging = 0;
-        
-        //Coroutine decides how long before the enemy will dodge again?
+        yield return new WaitForSeconds(1.5f);
+        _homingBombPrefab.SetActive(true);
+        Instantiate(_homingBombPrefab, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(1.5f);
+
     }
-    
+    */
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //IF tag is laser, then laser deplets shields
-        //Else if Shield ==0 and or null, && laser collides, then destroy game object
-        //Instantiate explosion animation
-        //Add 500 to score
-        //Play.audioSource
 
         if (gameObject != null)
         {
             
-
-            Debug.Log("Smart Enemy is not NULL");
-
             if (other.tag == "Laser" && _isShieldActive == true && _shieldLives > 0)
             {
+
                 EnemyShield();
-
-                //_shieldLives -= 1;
-
-                Debug.Log("Laser has collided");
 
                 Destroy(other.gameObject);
 
@@ -219,8 +202,6 @@ public class SmartEnemy : MonoBehaviour
 
             if (other.tag == "Laser" && _shieldLives <= 0 && _isShieldActive == false)
             {
-
-                //_explosionAnim.SetTrigger("OnEnemyDeath");
 
                 Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
 
@@ -236,12 +217,52 @@ public class SmartEnemy : MonoBehaviour
 
                 Destroy(gameObject, 0.2f);
 
-                Debug.Log("Smart enemy has been vanquished");
+                _player.AddScore(500);
+
+            }
+
+            if (other.tag == "Laser_Beam")
+            {
+                Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+
+                _speed = 0.0f;
+
+                gameObject.GetComponent<AudioSource>().Play();
+
+                GameObject.Find("Main Camera").GetComponent<CameraShake>().StartShake();
+
+                Destroy(GetComponent<Collider2D>());
+
+                Destroy(gameObject, 0.2f);
 
                 _player.AddScore(500);
             }
+
+            if (other.tag == "Player")
+            {
+
+                Player player = other.transform.GetComponent<Player>();
+
+                if (player != null)
+                {
+                    player.Damage();
+                }
+
+                Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+
+                _speed = 0.0f;
+
+                gameObject.GetComponent<AudioSource>().Play();
+
+                GameObject.Find("Main Camera").GetComponent<CameraShake>().StartShake();
+
+                Destroy(GetComponent<Collider2D>());
+
+                Destroy(gameObject, 0.2f);
+
+            }
+
         }
-        
 
     }
 
@@ -272,29 +293,42 @@ public class SmartEnemy : MonoBehaviour
             }
         }
 
-        
-
-            //_shieldVisualizer.SetActive(false);
-
-        
-        //Enemy shield has two lives
-        //If Shield life is == 0 then SetActive(false)
-
     }
-
-    private void EnemyMissileFire()
+    
+    public void SmartEnemyRam()
     {
-        //private transform target
-        //float _movementSpeed
+        
+        if (_player != null)
+        {
+            _distance = Vector3.Distance(_player.transform.position, transform.position);
+        }
+
+        if (_distance <= _ramRange)
+        {
+            Vector3 direction = transform.position - _player.transform.position;
+            direction = direction.normalized;
+            transform.position -= direction * Time.deltaTime * _ramSpeed;
+            gameObject.GetComponent<SpriteRenderer>().material.color = Color.red;
+
+
+        }
+        else gameObject.GetComponent<SpriteRenderer>().material.color = Color.white;
+
     }
 
-    /*
-    IEnumerator EnemyMissileFireRoutine()
+    public void DodgeMovement()
     {
-        //Determines when the missile will fire?
-        //Maybe CoRoutine is unnecessary?
+        _dodgeState = Random.Range(0, 3);
+        StartCoroutine(DodgeCoolDownRoutine());
     }
-    */
 
+
+
+    IEnumerator DodgeCoolDownRoutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        _dodgeState = 2;
+    }
     
 }

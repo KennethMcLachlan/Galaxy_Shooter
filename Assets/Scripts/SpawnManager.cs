@@ -58,9 +58,6 @@ public class SpawnManager : MonoBehaviour
     private UIManager _uiManager;
 
 
-   
-
-
     public void StartSpawning()
     {
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
@@ -102,13 +99,13 @@ public class SpawnManager : MonoBehaviour
                         newEnemy.transform.parent = _enemyContainer.transform;
                         break;
                     case 1:
-                        Vector3 spawnGoLeft = new Vector3(11f, Random.Range(-1.0f, 5.5f), 0);
+                        Vector3 spawnGoLeft = new Vector3(11f, Random.Range(0f, 5.5f), 0);
                         GameObject leftEnemy = Instantiate(_enemyPrefab, spawnGoLeft, Quaternion.identity);
                         leftEnemy.GetComponent<Enemy>().AssignDirection(1);
                         leftEnemy.transform.parent = _enemyContainer.transform;
                         break;
                     case 2:
-                        Vector3 spawnGoRight = new Vector3(-11f, Random.Range(-1.0f, 5.5f), 0);
+                        Vector3 spawnGoRight = new Vector3(-11f, Random.Range(0f, 5.5f), 0);
                         GameObject rightEnemy = Instantiate(_enemyPrefab, spawnGoRight, Quaternion.identity);
                         rightEnemy.GetComponent<Enemy>().AssignDirection(2);
                         rightEnemy.transform.parent = _enemyContainer.transform;
@@ -149,13 +146,13 @@ public class SpawnManager : MonoBehaviour
                         newEnemy.transform.parent = _enemyContainer.transform;
                         break;
                     case 1:
-                        Vector3 spawnGoLeft = new Vector3(11f, Random.Range(-1.0f, 5.5f), 0);
+                        Vector3 spawnGoLeft = new Vector3(11f, Random.Range(0f, 5.5f), 0);
                         GameObject leftEnemy = Instantiate(_enemyPrefab, spawnGoLeft, Quaternion.identity);
                         leftEnemy.GetComponent<Enemy>().AssignDirection(1);
                         leftEnemy.transform.parent = _enemyContainer.transform;
                         break;
                     case 2:
-                        Vector3 spawnGoRight = new Vector3(-11f, Random.Range(-1.0f, 5.5f), 0);
+                        Vector3 spawnGoRight = new Vector3(-11f, Random.Range(0f, 5.5f), 0);
                         GameObject rightEnemy = Instantiate(_enemyPrefab, spawnGoRight, Quaternion.identity);
                         rightEnemy.GetComponent<Enemy>().AssignDirection(2);
                         rightEnemy.transform.parent = _enemyContainer.transform;
@@ -194,13 +191,13 @@ public class SpawnManager : MonoBehaviour
                         newEnemy.transform.parent = _enemyContainer.transform;
                         break;
                     case 1:
-                        Vector3 spawnGoLeft = new Vector3(11f, Random.Range(-1.0f, 5.5f), 0);
+                        Vector3 spawnGoLeft = new Vector3(11f, Random.Range(0f, 5.5f), 0);
                         GameObject leftEnemy = Instantiate(_enemyPrefab, spawnGoLeft, Quaternion.identity);
                         leftEnemy.GetComponent<Enemy>().AssignDirection(1);
                         leftEnemy.transform.parent = _enemyContainer.transform;
                         break;
                     case 2:
-                        Vector3 spawnGoRight = new Vector3(-11f, Random.Range(-1.0f, 5.5f), 0);
+                        Vector3 spawnGoRight = new Vector3(-11f, Random.Range(0f, 5.5f), 0);
                         GameObject rightEnemy = Instantiate(_enemyPrefab, spawnGoRight, Quaternion.identity);
                         rightEnemy.GetComponent<Enemy>().AssignDirection(2);
                         rightEnemy.transform.parent = _enemyContainer.transform;
@@ -276,7 +273,7 @@ public class SpawnManager : MonoBehaviour
         
         while (_stopSpawning == false)
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(Random.Range(15f, 25f));
 
             Debug.Log("SmartEnemy has Spawned");
 
@@ -291,13 +288,13 @@ public class SpawnManager : MonoBehaviour
                     newSmartEnemy.transform.parent = _enemyContainer.transform;
                     break;
                 case 1:
-                    Vector3 spawnSmartGoLeft = new Vector3(11f, Random.Range(-1.0f, 5.5f), 0);
+                    Vector3 spawnSmartGoLeft = new Vector3(11f, Random.Range(0f, 5.5f), 0);
                     GameObject leftSmartEnemy = Instantiate(_smartEnemyPrefab, spawnSmartGoLeft, Quaternion.identity);
                     leftSmartEnemy.GetComponent<SmartEnemy>().SmartEnemyDirection(2);
                     leftSmartEnemy.transform.parent = _enemyContainer.transform;
                     break;
                 case 2:
-                    Vector3 spawnSmartGoRight = new Vector3(-11f, Random.Range(-1.0f, 5.5f), 0);
+                    Vector3 spawnSmartGoRight = new Vector3(-11f, Random.Range(0f, 5.5f), 0);
                     GameObject rightSmartEnemy = Instantiate(_smartEnemyPrefab, spawnSmartGoRight, Quaternion.identity);
                     rightSmartEnemy.GetComponent<SmartEnemy>().SmartEnemyDirection(3);
                     rightSmartEnemy.transform.parent = _enemyContainer.transform;
