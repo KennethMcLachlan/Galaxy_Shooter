@@ -74,6 +74,8 @@ public class SmartMissile : MonoBehaviour
 
             GameObject.Find("Main Camera").GetComponent<CameraShake>().StartShake();
 
+            Destroy(other.gameObject);
+
             Destroy(GetComponent<Collider2D>());
 
             Destroy(this.gameObject, 0.2f);

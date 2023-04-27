@@ -12,6 +12,7 @@ TagManager:
   - Laser_Beam
   - Enemy_Shield
   - Dodge_Detector
+  - ReverseLaser
   layers:
   - Default
   - TransparentFX

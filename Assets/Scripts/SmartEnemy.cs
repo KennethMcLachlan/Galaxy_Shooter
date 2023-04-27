@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
@@ -11,6 +12,9 @@ public class SmartEnemy : MonoBehaviour
 
     [SerializeField]
     public GameObject _dodgeDetector;
+
+    [SerializeField]
+    public GameObject _playerDetector;
 
     private bool _isShieldActive;
 
@@ -47,6 +51,14 @@ public class SmartEnemy : MonoBehaviour
     private float _fireRate = 3.0f;
 
     private float _canFire = -1f;
+
+    [SerializeField]
+    private GameObject _reverseLaser;
+
+    [SerializeField]
+    private bool _playerDetectorPenetrated;
+
+    private int _randomReverseShot;
 
     void Start()
     {
@@ -163,7 +175,7 @@ public class SmartEnemy : MonoBehaviour
             _fireRate = Random.Range(2.0f, 5.5f);
             _canFire = Time.time + _fireRate;
 
-            Instantiate(_homingBombPrefab, transform.position, Quaternion.identity);
+            Instantiate(_homingBombPrefab, transform.position + new Vector3(0.079f, -1.6f, 0), Quaternion.identity);
 
             smartMissile.HomingBombBehavior();
         }
@@ -314,6 +326,30 @@ public class SmartEnemy : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         _dodgeState = 2;
+    }
+
+    public void ReverseLaser()
+    {
+        _randomReverseShot = Random.Range(0, 2);
+
+        ReverseLaser reverseLaser = GetComponent<ReverseLaser>();
+
+        if (gameObject != null)
+        {
+            switch (_randomReverseShot)
+            {
+                case 0:
+                    Instantiate(_reverseLaser, transform.position + new Vector3(1.156f, -0.1f, 0), Quaternion.identity);
+                    reverseLaser.LaserMovement();
+                    break;
+                case 1:
+                    //Left Blank to not fire
+                    break;
+                default:
+                    break;
+
+            }
+        }
     }
     
 }
