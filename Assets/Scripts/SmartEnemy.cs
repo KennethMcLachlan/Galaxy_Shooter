@@ -119,8 +119,10 @@ public class SmartEnemy : MonoBehaviour
 
         if (transform.position.x < -11f)
         {
-            float randomY = Random.Range(-1.0f, 5.5f);
-            transform.position = new Vector3(11f, randomY, 0);
+            
+            Destroy(gameObject);
+            //float randomY = Random.Range(-1.0f, 5.5f);
+            //transform.position = new Vector3(11f, randomY, 0);
         }
 
     }
@@ -131,8 +133,9 @@ public class SmartEnemy : MonoBehaviour
 
         if (transform.position.x > 11f)
         {
-            float randomY = Random.Range(-1.0f, 5.5f);
-            transform.position = new Vector3(-11f, randomY, 0);
+            Destroy(gameObject);
+            //float randomY = Random.Range(-1.0f, 5.5f);
+            //transform.position = new Vector3(-11f, randomY, 0);
         }
 
     }
@@ -143,8 +146,9 @@ public class SmartEnemy : MonoBehaviour
 
         if (transform.position.y < -6f)
         {
-            float randomX = Random.Range(-9.5f, 9.5f);
-            transform.position = new Vector3(randomX, 7f, 0);
+            Destroy(gameObject);
+            //float randomX = Random.Range(-9.5f, 9.5f);
+            //transform.position = new Vector3(randomX, 7f, 0);
         }
 
     }
@@ -155,8 +159,9 @@ public class SmartEnemy : MonoBehaviour
         
         if (transform.position.y < -6f)
         {
-            float randomX = Random.Range(-9.5f, 9.5f);
-            transform.position = new Vector3(randomX, 7f, 0);
+            Destroy(gameObject);
+            //float randomX = Random.Range(-9.5f, 9.5f);
+            //transform.position = new Vector3(randomX, 7f, 0);
         }
 
     }
@@ -168,7 +173,6 @@ public class SmartEnemy : MonoBehaviour
 
     public void EnemyBombFire()
     {
-        SmartMissile smartMissile = GetComponentInChildren<SmartMissile>();
 
         if (Time.time > _canFire)
         {
@@ -177,7 +181,6 @@ public class SmartEnemy : MonoBehaviour
 
             Instantiate(_homingBombPrefab, transform.position + new Vector3(0.079f, -1.6f, 0), Quaternion.identity);
 
-            smartMissile.HomingBombBehavior();
         }
 
     }

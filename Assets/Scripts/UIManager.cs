@@ -138,4 +138,32 @@ public class UIManager : MonoBehaviour
         _endOfWaveText.gameObject.SetActive(false);
 
     }
+
+    IEnumerator UpdateBossRound()
+    {
+        _endOfWaveText.gameObject.SetActive(true);
+
+        _endOfWaveText.text = "BOSS ROUND";
+        yield return new WaitForSeconds(3.0f);
+
+        _endOfWaveText.text = "PREPARE FOR BATTLE IN...";
+        yield return new WaitForSeconds(3.0f);
+
+        _endOfWaveText.text = "3";
+        yield return new WaitForSeconds(1.0f);
+
+        _endOfWaveText.text = "2";
+        yield return new WaitForSeconds(1.0f);
+
+        _endOfWaveText.text = "1";
+        yield return new WaitForSeconds(1.0f);
+
+        _endOfWaveText.gameObject.SetActive(false);
+
+    }
+
+    public void StartBossRoundTextRoutine()
+    {
+        StartCoroutine(UpdateBossRound());
+    }
 }
