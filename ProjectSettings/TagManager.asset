@@ -13,6 +13,7 @@ TagManager:
   - Enemy_Shield
   - Dodge_Detector
   - ReverseLaser
+  - FinalBoss
   layers:
   - Default
   - TransparentFX

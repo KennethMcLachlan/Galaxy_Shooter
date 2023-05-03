@@ -12,14 +12,9 @@ public class LaserBeam : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //if the enemy collides with the laser beam
-        //enemy gameobject is destroyed
-
         if (collision.tag == "Enemy")
         {
             Destroy(collision.gameObject);
-            //Enemy enemy = collision.transform.GetComponent<Enemy>();
-            //Destroy(enemy);
         }
     }
 }

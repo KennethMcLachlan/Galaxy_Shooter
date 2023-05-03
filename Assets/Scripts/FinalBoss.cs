@@ -34,6 +34,16 @@ public class FinalBoss : MonoBehaviour
 
     private float _canFire = -1f;
 
+    [SerializeField]
+    private int _lives = 15;
+
+    [SerializeField]
+    private GameObject _bossLaserBeam;
+
+    [SerializeField]
+    AudioSource _laserBeamAudio;
+
+    private bool _isLaserFireActive;
 
 
 
@@ -57,7 +67,39 @@ public class FinalBoss : MonoBehaviour
         else if (_isMoving == true && _isSideToSide == true)
         {
             BattleMovement();
-            LaserFire();
+        }
+
+        
+
+    }
+
+    IEnumerator BossBattleRoutine()
+    {
+        while (_bossIsAlive == true)
+        {
+            _isLaserFireActive = true;
+
+            if (_isLaserFireActive == true)
+            {
+                LaserFire();
+            }
+
+            yield return new WaitForSeconds(5f);
+            _isLaserFireActive = false;
+
+            yield return new WaitForSeconds(3f);
+
+            MissileFire();
+
+            yield return new WaitForSeconds(3f);
+
+            MissileFire();
+
+            yield return new WaitForSeconds(5f);
+
+            LaserBeam();
+
+            yield return new WaitForSeconds(5f);
         }
     }
 
@@ -73,10 +115,6 @@ public class FinalBoss : MonoBehaviour
 
     }
 
-    //IEnumerator AttackRoutine()
-    //{
-
-    //}
     public void IntroMovement()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
@@ -120,12 +158,6 @@ public class FinalBoss : MonoBehaviour
     {
         transform.Translate(Vector3.right * _battleSpeed * Time.deltaTime);
     }
-    
-
-    IEnumerator WaitingPeriod()
-    {
-        yield return new WaitForSeconds(5f);
-    }
 
     private void MissileFire()
     {
@@ -144,14 +176,48 @@ public class FinalBoss : MonoBehaviour
         }
     }
 
-    //private void LaserBeam()
-    //{
-    //    Instantiate(_laserBeam, transform.position + new Vector3())
-    //}
 
-    private void Lives()
+    public void LivesManager()
     {
+        _lives -= 1;
 
+        if (_lives <= 5)
+        {
+            GetComponent<SpriteRenderer>().material.color = Color.red;
+        }
+        else if (_lives <= 0)
+        {
+            _bossIsAlive = false;
+
+            _battleSpeed = 0f;
+
+            Destroy(gameObject);
+        }
     }
 
+    private void LaserBeam()
+    {
+        GameObject.Find("Main Camera").GetComponent<CameraShake>().StartShake();
+
+        _bossLaserBeam.SetActive(true);
+
+        _laserBeamAudio.Play();
+        
+
+        StartCoroutine(LaserBeamCooldownRoutine());
+    }
+
+    IEnumerator LaserBeamCooldownRoutine()
+    {
+        yield return new WaitForSeconds(5.4f);
+        _laserBeam.SetActive(false);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Laser" && gameObject != null)
+        {
+            LivesManager();
+        }
+    }
 }

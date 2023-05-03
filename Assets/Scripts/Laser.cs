@@ -80,7 +80,14 @@ public class Laser : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+        /*
+        if (other.tag == "FinalBoss")
+        {
+            FinalBoss finalBoss = other.GetComponent<FinalBoss>();
 
+            finalBoss.LivesManager();
+        }
+        */
     }
     
 }
