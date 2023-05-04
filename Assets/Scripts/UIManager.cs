@@ -74,12 +74,16 @@ public class UIManager : MonoBehaviour
 
     public void UpdateLives(int currentLives)
     {
-        _livesImg.sprite = _liveSprites[currentLives];
 
-        if (currentLives == 0)
+        if (currentLives <= 0)
         {
             GameOverSequence();
+
+            currentLives = 0;
         }
+
+        _livesImg.sprite = _liveSprites[currentLives];
+
     }
 
     public void UpdateThrusterPercentage(float percentage)

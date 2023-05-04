@@ -123,9 +123,10 @@ MonoBehaviour:
   _bossLaser: {fileID: 9211012266217257270, guid: aaac3b813f8eea54eb054e40dcb2609e, type: 3}
   _laserBeam: {fileID: 1370803147623337585, guid: 46b050f4d182bfe4a9b0bc73edb2eb58, type: 3}
   _fireRate: 0.3
-  _lives: 0
+  _lives: 15
   _bossLaserBeam: {fileID: 4456616526661217220, guid: 9fc1ba0fc114fce488a8ab011a9b7efa, type: 3}
   _laserBeamAudio: {fileID: 1819297445}
+  _explosionPrefab: {fileID: 4960581075948737496, guid: 78f7cb07a93298f42b73a892fbdb5798, type: 3}
 --- !u!82 &1819297445
 AudioSource:
   m_ObjectHideFlags: 0
@@ -137,7 +138,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 2ce0c987f044d984cbfb30a5161557e4, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

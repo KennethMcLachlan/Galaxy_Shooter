@@ -45,11 +45,30 @@ public class FinalBoss : MonoBehaviour
 
     private bool _isLaserFireActive;
 
+    private bool _isBossActive;
+
+    [SerializeField]
+    private GameObject _explosionPrefab;
+
+    private Vector3 _scaleChange;
+
+    private float _timeCounter;
+
+    [SerializeField]
+    private float _laserFireDelay = 0.1f;
+
+    private WaitForSeconds _waitTwoSeconds = new WaitForSeconds(2);
+
 
 
     void Start()
     {
         _bossIsAlive = true;
+
+        //if (_isBossActive == true)
+        //{
+        //    StartCoroutine(BossBattleRoutine());
+        //}
     }
 
     
@@ -67,25 +86,36 @@ public class FinalBoss : MonoBehaviour
         else if (_isMoving == true && _isSideToSide == true)
         {
             BattleMovement();
-        }
 
-        
+            if (_isBossActive == false)
+            {
+                StartCoroutine(BossBattleRoutine());
+            }
+        }
 
     }
 
     IEnumerator BossBattleRoutine()
     {
+        _isBossActive = true;
+
         while (_bossIsAlive == true)
         {
-            _isLaserFireActive = true;
 
-            if (_isLaserFireActive == true)
+            _timeCounter = 0;
+
+            while (_timeCounter < 5f)
             {
                 LaserFire();
+                yield return new WaitForSeconds(_laserFireDelay);
+
+                _timeCounter += _laserFireDelay;
             }
 
-            yield return new WaitForSeconds(5f);
-            _isLaserFireActive = false;
+            //while (_isLaserFireActive == true)
+            //{
+            //    LaserFire();
+            //}
 
             yield return new WaitForSeconds(3f);
 
@@ -165,6 +195,8 @@ public class FinalBoss : MonoBehaviour
 
         Instantiate(_missilePrefab, transform.position + new Vector3(-2.45f, -1.32f, 0), Quaternion.identity);
 
+        //return;
+
     }
 
     private void LaserFire()
@@ -185,11 +217,16 @@ public class FinalBoss : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().material.color = Color.red;
         }
-        else if (_lives <= 0)
+
+        if (_lives <= 0)
         {
             _bossIsAlive = false;
 
+            _isBossActive = false;
+
             _battleSpeed = 0f;
+
+            StartCoroutine(ExplosionRoutine());
 
             Destroy(gameObject);
         }
@@ -211,6 +248,48 @@ public class FinalBoss : MonoBehaviour
     {
         yield return new WaitForSeconds(5.4f);
         _laserBeam.SetActive(false);
+    }
+
+    IEnumerator ExplosionRoutine()
+    {
+        Instantiate(_explosionPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+        yield return _waitTwoSeconds;
+        yield return _waitTwoSeconds;
+
+        Instantiate(_explosionPrefab, transform.position + new Vector3(-1.66f, 2.66f, 0), Quaternion.identity);
+        yield return new WaitForSeconds(1.8f);
+
+        Instantiate(_explosionPrefab, transform.position + new Vector3(1.58f, 1.36f, 0), Quaternion.identity);
+        yield return new WaitForSeconds(1.5f);
+
+        Instantiate(_explosionPrefab, transform.position + new Vector3(-2.94f, 0.64f, 0), Quaternion.identity);
+        yield return new WaitForSeconds(1.2f);
+
+        Instantiate(_explosionPrefab, transform.position + new Vector3(-0.87f, -0.45f, 0), Quaternion.identity);
+        yield return new WaitForSeconds(0.9f);
+
+        Instantiate(_explosionPrefab, transform.position + new Vector3(1.69f, 1.81f, 0), Quaternion.identity);
+        yield return new WaitForSeconds(0.5f);
+
+        Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(0.4f);
+
+        Instantiate(_explosionPrefab, transform.position + new Vector3(0.7f, 2.57f, 0), Quaternion.identity);
+        yield return new WaitForSeconds(0.2f);
+
+        Instantiate(_explosionPrefab, transform.position + new Vector3(-1.93f, 0.31f, 0), Quaternion.identity);
+        yield return new WaitForSeconds(0.2f);
+
+        Instantiate(_explosionPrefab, transform.position + new Vector3(2.22f, 0.31f, 0), Quaternion.identity);
+        yield return new WaitForSeconds(0.2f);
+
+        Instantiate(_explosionPrefab, transform.position + new Vector3(1.69f, 1.81f, 0), Quaternion.identity);
+        yield return new WaitForSeconds(2f);
+
+        _scaleChange = new Vector3(2, 2, 0);
+        _explosionPrefab.transform.localScale += _scaleChange;
+
+        Instantiate(_explosionPrefab, transform.position + new Vector3(2.22f, 0.57f, 0), Quaternion.identity);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

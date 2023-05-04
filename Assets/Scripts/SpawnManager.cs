@@ -75,7 +75,7 @@ public class SpawnManager : MonoBehaviour
 
         StartCoroutine(SpawnHealthRoutine());
 
-        StartCoroutine(SpawnSmartEnemyRoutine());
+        //StartCoroutine(SpawnSmartEnemyRoutine());
     }
     void Update()
     {
@@ -287,43 +287,43 @@ public class SpawnManager : MonoBehaviour
         
     }
 
-    IEnumerator SpawnSmartEnemyRoutine()
-    {
+    //IEnumerator SpawnSmartEnemyRoutine()
+    //{
         
-        while (_stopSpawning == false)
-        {
-            yield return new WaitForSeconds(Random.Range(15f, 25f));
+    //    while (_stopSpawning == false)
+    //    {
+    //        yield return new WaitForSeconds(Random.Range(15f, 25f));
 
-            int _randomSpawnLocation = Random.Range(0, 3);
+    //        int _randomSpawnLocation = Random.Range(0, 3);
 
-            switch (_randomSpawnLocation)
-            {
-                case 0:
-                    Vector3 posSmartToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
-                    GameObject newSmartEnemy = Instantiate(_smartEnemyPrefab, posSmartToSpawn, Quaternion.identity);
-                    newSmartEnemy.GetComponent<SmartEnemy>().SmartEnemyDirection(Random.Range(0,1));
-                    newSmartEnemy.transform.parent = _enemyContainer.transform;
-                    break;
-                case 1:
-                    Vector3 spawnSmartGoLeft = new Vector3(11f, Random.Range(0f, 5.5f), 0);
-                    GameObject leftSmartEnemy = Instantiate(_smartEnemyPrefab, spawnSmartGoLeft, Quaternion.identity);
-                    leftSmartEnemy.GetComponent<SmartEnemy>().SmartEnemyDirection(2);
-                    leftSmartEnemy.transform.parent = _enemyContainer.transform;
-                    break;
-                case 2:
-                    Vector3 spawnSmartGoRight = new Vector3(-11f, Random.Range(0f, 5.5f), 0);
-                    GameObject rightSmartEnemy = Instantiate(_smartEnemyPrefab, spawnSmartGoRight, Quaternion.identity);
-                    rightSmartEnemy.GetComponent<SmartEnemy>().SmartEnemyDirection(3);
-                    rightSmartEnemy.transform.parent = _enemyContainer.transform;
-                    break;
+    //        switch (_randomSpawnLocation)
+    //        {
+    //            case 0:
+    //                Vector3 posSmartToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
+    //                GameObject newSmartEnemy = Instantiate(_smartEnemyPrefab, posSmartToSpawn, Quaternion.identity);
+    //                newSmartEnemy.GetComponent<SmartEnemy>().SmartEnemyDirection(Random.Range(0,1));
+    //                newSmartEnemy.transform.parent = _enemyContainer.transform;
+    //                break;
+    //            case 1:
+    //                Vector3 spawnSmartGoLeft = new Vector3(11f, Random.Range(0f, 5.5f), 0);
+    //                GameObject leftSmartEnemy = Instantiate(_smartEnemyPrefab, spawnSmartGoLeft, Quaternion.identity);
+    //                leftSmartEnemy.GetComponent<SmartEnemy>().SmartEnemyDirection(2);
+    //                leftSmartEnemy.transform.parent = _enemyContainer.transform;
+    //                break;
+    //            case 2:
+    //                Vector3 spawnSmartGoRight = new Vector3(-11f, Random.Range(0f, 5.5f), 0);
+    //                GameObject rightSmartEnemy = Instantiate(_smartEnemyPrefab, spawnSmartGoRight, Quaternion.identity);
+    //                rightSmartEnemy.GetComponent<SmartEnemy>().SmartEnemyDirection(3);
+    //                rightSmartEnemy.transform.parent = _enemyContainer.transform;
+    //                break;
                 
-                default:
-                    break;
+    //            default:
+    //                break;
 
-            }
-        }
+    //        }
+    //    }
 
-    }
+    //}
     IEnumerator SpawnPowerupRoutine()
     {
         yield return new WaitForSeconds(3.0f);
