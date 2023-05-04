@@ -2221,6 +2221,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_Ship
       objectReference: {fileID: 0}
+    - target: {fileID: 3076940199602077478, guid: a0b753699d542cb4b84d6d029a30617f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3076940199602077479, guid: a0b753699d542cb4b84d6d029a30617f, type: 3}
       propertyPath: _powerupAudio
       value: 
