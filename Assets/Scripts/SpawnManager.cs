@@ -55,10 +55,23 @@ public class SpawnManager : MonoBehaviour
     private float _waveFourSpeed = 1.5f;
 
     [SerializeField]
+    private int _waveCount;
+
+    [SerializeField]
+    private int _waveSpeed;
+
+    [SerializeField]
     private UIManager _uiManager;
 
     [SerializeField]
     private GameObject _bossPrefab;
+
+    private bool _bossHasSpawned;
+
+    [SerializeField]
+    private WaitForSeconds _waitTimeBetweenWaves = new WaitForSeconds(11f);
+
+    private bool _bossIsDead;
 
 
     public void StartSpawning()
@@ -75,255 +88,151 @@ public class SpawnManager : MonoBehaviour
 
         StartCoroutine(SpawnHealthRoutine());
 
-        //StartCoroutine(SpawnSmartEnemyRoutine());
+        StartCoroutine(SpawnSmartEnemyRoutine());
     }
     void Update()
     {
         
     }
-    IEnumerator SpawnEnemyRoutine()
+    public IEnumerator SpawnEnemyRoutine()
     {
         yield return new WaitForSeconds(3.0f);
 
+        while (_stopSpawning == false)
+        {
+            ////Wave 1
+
+            for (int waveCount = _waveOneCount; waveCount > 0; waveCount--)
+            {
+                WaveSwitchState();
+
+                yield return new WaitForSeconds(_waveOneSpeed);
+
+                if (waveCount == 0)
+                {
+                    break;
+                }
+            }
+
+            Debug.Log("End of first wave");
+
+            _uiManager.StartUpdateWavesCoroutine();
+
+            yield return _waitTimeBetweenWaves;
+
+
+            //Wave 2
+
+            for (int waveCount = _waveTwoCount; waveCount > 0; waveCount--)
+            {
+                WaveSwitchState();
+
+                yield return new WaitForSeconds(_waveTwoSpeed);
+
+                if (waveCount == 0)
+                {
+                    break;
+                }
+            }
+            Debug.Log("End of second wave");
+
+            _uiManager.StartUpdateWavesCoroutine();
+
+            yield return _waitTimeBetweenWaves;
+
+
+            //Wave 3
+
+            for (int waveCount = _waveThreeCount; waveCount > 0; waveCount--)
+            {
+                WaveSwitchState();
+
+                yield return new WaitForSeconds(_waveThreeSpeed);
+
+                if (waveCount == 0)
+                {
+                    break;
+                }
+            }
+            Debug.Log("End of third wave");
+
+            _uiManager.StartUpdateWavesCoroutine();
+
+            yield return _waitTimeBetweenWaves;
+
+
+            //Wave 4
+
+            for (int waveCount = _waveFourCount; waveCount > 0; waveCount--)
+            {
+                WaveSwitchState();
+                yield return new WaitForSeconds(_waveFourSpeed);
+
+                if (waveCount == 0)
+                {
+                    break;
+                }
+
+            }
+            Debug.Log("End of fourth wave");
+            break;
+
+        }
+        yield return new WaitForSeconds(3.0f);
+
+        //Boss Round
+
+        _uiManager.StartBossRoundTextRoutine();
+        _bossHasSpawned = true;
+
         BossSpawn();
-
-
-        //while (_stopSpawning == false)
-        //{
-        //    //Wave 1
-
-            
-
-        //    for (int waveCount = _waveOneCount; waveCount > 0; waveCount--)
-        //    {
-        //        int _randomSpawnLocation = Random.Range(0, 3);
-
-        //        switch (_randomSpawnLocation)
-        //        {
-        //            case 0:
-        //                Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
-        //                GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
-        //                newEnemy.GetComponent<Enemy>().AssignDirection(0);
-        //                newEnemy.transform.parent = _enemyContainer.transform;
-        //                break;
-        //            case 1:
-        //                Vector3 spawnGoLeft = new Vector3(11f, Random.Range(0f, 5.5f), 0);
-        //                GameObject leftEnemy = Instantiate(_enemyPrefab, spawnGoLeft, Quaternion.identity);
-        //                leftEnemy.GetComponent<Enemy>().AssignDirection(1);
-        //                leftEnemy.transform.parent = _enemyContainer.transform;
-        //                break;
-        //            case 2:
-        //                Vector3 spawnGoRight = new Vector3(-11f, Random.Range(0f, 5.5f), 0);
-        //                GameObject rightEnemy = Instantiate(_enemyPrefab, spawnGoRight, Quaternion.identity);
-        //                rightEnemy.GetComponent<Enemy>().AssignDirection(2);
-        //                rightEnemy.transform.parent = _enemyContainer.transform;
-        //                break;
-        //            default:
-        //                break;
-
-        //        }
-
-        //        yield return new WaitForSeconds(_waveOneSpeed);
-
-        //        if (waveCount == 0)
-        //        {
-        //            break;
-        //        }
-
-        //    }
-            
-        //    Debug.Log("End of first wave");
-
-        //    _uiManager.StartUpdateWavesCoroutine();
-           
-
-        //    yield return new WaitForSeconds(11.0f);
-
-        //    //Wave 2
-
-        //    for (int waveCount = _waveTwoCount; waveCount > 0; waveCount--)
-        //    {
-        //        int _randomSpawnLocation = Random.Range(0, 3);
-
-        //        switch (_randomSpawnLocation)
-        //        {
-        //            case 0:
-        //                Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
-        //                GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
-        //                newEnemy.GetComponent<Enemy>().AssignDirection(0);
-        //                newEnemy.transform.parent = _enemyContainer.transform;
-        //                break;
-        //            case 1:
-        //                Vector3 spawnGoLeft = new Vector3(11f, Random.Range(0f, 5.5f), 0);
-        //                GameObject leftEnemy = Instantiate(_enemyPrefab, spawnGoLeft, Quaternion.identity);
-        //                leftEnemy.GetComponent<Enemy>().AssignDirection(1);
-        //                leftEnemy.transform.parent = _enemyContainer.transform;
-        //                break;
-        //            case 2:
-        //                Vector3 spawnGoRight = new Vector3(-11f, Random.Range(0f, 5.5f), 0);
-        //                GameObject rightEnemy = Instantiate(_enemyPrefab, spawnGoRight, Quaternion.identity);
-        //                rightEnemy.GetComponent<Enemy>().AssignDirection(2);
-        //                rightEnemy.transform.parent = _enemyContainer.transform;
-        //                break;
-        //            default:
-        //                break;
-
-        //        }
-
-        //        yield return new WaitForSeconds(_waveTwoSpeed);
-
-        //        if (waveCount == 0)
-        //        {
-        //            break;
-        //        }
-
-        //    }
-        //    Debug.Log("End of second wave");
-
-        //    _uiManager.StartUpdateWavesCoroutine();
-
-        //    yield return new WaitForSeconds(11.0f);
-
-        //    //Wave 3
-
-        //    for (int waveCount = _waveThreeCount; waveCount > 0; waveCount--)
-        //    {
-        //        int _randomSpawnLocation = Random.Range(0, 3);
-
-        //        switch (_randomSpawnLocation)
-        //        {
-        //            case 0:
-        //                Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
-        //                GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
-        //                newEnemy.GetComponent<Enemy>().AssignDirection(0);
-        //                newEnemy.transform.parent = _enemyContainer.transform;
-        //                break;
-        //            case 1:
-        //                Vector3 spawnGoLeft = new Vector3(11f, Random.Range(0f, 5.5f), 0);
-        //                GameObject leftEnemy = Instantiate(_enemyPrefab, spawnGoLeft, Quaternion.identity);
-        //                leftEnemy.GetComponent<Enemy>().AssignDirection(1);
-        //                leftEnemy.transform.parent = _enemyContainer.transform;
-        //                break;
-        //            case 2:
-        //                Vector3 spawnGoRight = new Vector3(-11f, Random.Range(0f, 5.5f), 0);
-        //                GameObject rightEnemy = Instantiate(_enemyPrefab, spawnGoRight, Quaternion.identity);
-        //                rightEnemy.GetComponent<Enemy>().AssignDirection(2);
-        //                rightEnemy.transform.parent = _enemyContainer.transform;
-        //                break;
-        //            default:
-        //                break;
-
-        //        }
-
-        //        yield return new WaitForSeconds(_waveThreeSpeed);
-
-        //        if (waveCount == 0)
-        //        {
-        //            break;
-        //        }
-
-        //    }
-        //    Debug.Log("End of third wave");
-
-        //    _uiManager.StartUpdateWavesCoroutine();
-
-        //    yield return new WaitForSeconds(11.0f);
-
-        //    //Wave 4
-
-        //    for (int waveCount = _waveFourCount; waveCount > 0; waveCount--)
-        //    {
-        //        int _randomSpawnLocation = Random.Range(0, 3);
-
-        //        switch (_randomSpawnLocation)
-        //        {
-        //            case 0:
-        //                Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
-        //                GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
-        //                newEnemy.GetComponent<Enemy>().AssignDirection(0);
-        //                newEnemy.transform.parent = _enemyContainer.transform;
-        //                break;
-        //            case 1:
-        //                Vector3 spawnGoLeft = new Vector3(11f, Random.Range(-1.0f, 5.5f), 0);
-        //                GameObject leftEnemy = Instantiate(_enemyPrefab, spawnGoLeft, Quaternion.identity);
-        //                leftEnemy.GetComponent<Enemy>().AssignDirection(1);
-        //                leftEnemy.transform.parent = _enemyContainer.transform;
-        //                break;
-        //            case 2:
-        //                Vector3 spawnGoRight = new Vector3(-11f, Random.Range(-1.0f, 5.5f), 0);
-        //                GameObject rightEnemy = Instantiate(_enemyPrefab, spawnGoRight, Quaternion.identity);
-        //                rightEnemy.GetComponent<Enemy>().AssignDirection(2);
-        //                rightEnemy.transform.parent = _enemyContainer.transform;
-        //                break;
-        //            default:
-        //                break;
-
-        //        }
-
-        //        yield return new WaitForSeconds(_waveFourSpeed);
-
-        //        if (waveCount == 0)
-        //        {
-
-        //            break;
-        //        }
-
-        //    }
-        //    Debug.Log("End of fourth wave");
-
-        //    yield return new WaitForSeconds(15.0f);
-
-        //    //Boss Round
-
-        //    _uiManager.StartBossRoundTextRoutine();
-        //    yield return new WaitForSeconds(11.0f);
-
-
-
-        //    //BossSpawn();
-
-        //}
-
-        
     }
 
-    //IEnumerator SpawnSmartEnemyRoutine()
-    //{
-        
-    //    while (_stopSpawning == false)
-    //    {
-    //        yield return new WaitForSeconds(Random.Range(15f, 25f));
+    IEnumerator SpawnSmartEnemyRoutine()
+    {
+        while (_stopSpawning == false)
+        {
+            yield return new WaitForSeconds(Random.Range(15f, 25f));
 
-    //        int _randomSpawnLocation = Random.Range(0, 3);
+            int _randomSpawnLocation = Random.Range(0, 3);
 
-    //        switch (_randomSpawnLocation)
-    //        {
-    //            case 0:
-    //                Vector3 posSmartToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
-    //                GameObject newSmartEnemy = Instantiate(_smartEnemyPrefab, posSmartToSpawn, Quaternion.identity);
-    //                newSmartEnemy.GetComponent<SmartEnemy>().SmartEnemyDirection(Random.Range(0,1));
-    //                newSmartEnemy.transform.parent = _enemyContainer.transform;
-    //                break;
-    //            case 1:
-    //                Vector3 spawnSmartGoLeft = new Vector3(11f, Random.Range(0f, 5.5f), 0);
-    //                GameObject leftSmartEnemy = Instantiate(_smartEnemyPrefab, spawnSmartGoLeft, Quaternion.identity);
-    //                leftSmartEnemy.GetComponent<SmartEnemy>().SmartEnemyDirection(2);
-    //                leftSmartEnemy.transform.parent = _enemyContainer.transform;
-    //                break;
-    //            case 2:
-    //                Vector3 spawnSmartGoRight = new Vector3(-11f, Random.Range(0f, 5.5f), 0);
-    //                GameObject rightSmartEnemy = Instantiate(_smartEnemyPrefab, spawnSmartGoRight, Quaternion.identity);
-    //                rightSmartEnemy.GetComponent<SmartEnemy>().SmartEnemyDirection(3);
-    //                rightSmartEnemy.transform.parent = _enemyContainer.transform;
-    //                break;
-                
-    //            default:
-    //                break;
+            switch (_randomSpawnLocation)
+            {
+                case 0:
+                    Vector3 posSmartToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
+                    GameObject newSmartEnemy = Instantiate(_smartEnemyPrefab, posSmartToSpawn, Quaternion.identity);
+                    newSmartEnemy.GetComponent<SmartEnemy>().SmartEnemyDirection(Random.Range(0, 1));
+                    newSmartEnemy.transform.parent = _enemyContainer.transform;
+                    break;
+                case 1:
+                    Vector3 spawnSmartGoLeft = new Vector3(11f, Random.Range(0f, 5.5f), 0);
+                    GameObject leftSmartEnemy = Instantiate(_smartEnemyPrefab, spawnSmartGoLeft, Quaternion.identity);
+                    leftSmartEnemy.GetComponent<SmartEnemy>().SmartEnemyDirection(2);
+                    leftSmartEnemy.transform.parent = _enemyContainer.transform;
+                    break;
+                case 2:
+                    Vector3 spawnSmartGoRight = new Vector3(-11f, Random.Range(0f, 5.5f), 0);
+                    GameObject rightSmartEnemy = Instantiate(_smartEnemyPrefab, spawnSmartGoRight, Quaternion.identity);
+                    rightSmartEnemy.GetComponent<SmartEnemy>().SmartEnemyDirection(3);
+                    rightSmartEnemy.transform.parent = _enemyContainer.transform;
+                    break;
 
-    //        }
-    //    }
+                default:
+                    break;
 
-    //}
+            }
+
+            if (_bossHasSpawned == true)
+            {
+                StopAllCoroutines();
+                StartCoroutine(SpawnAmmoFillRoutine());
+                //break;
+            }
+
+            //break;
+        }
+
+    }
     IEnumerator SpawnPowerupRoutine()
     {
         yield return new WaitForSeconds(3.0f);
@@ -332,7 +241,7 @@ public class SpawnManager : MonoBehaviour
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
 
-            int randomPowerUp = Random.Range(0, 6);
+            int randomPowerUp = Random.Range(0, 7);
 
             Instantiate(_powerups[randomPowerUp], posToSpawn, Quaternion.identity);
             
@@ -359,7 +268,7 @@ public class SpawnManager : MonoBehaviour
     {
         yield return new WaitForSeconds(10f);
 
-        while (_stopSpawning == false)
+        while (_stopSpawning == false || _bossHasSpawned == true)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
 
@@ -385,6 +294,7 @@ public class SpawnManager : MonoBehaviour
 
     public void BossSpawn()
     {
+        _bossHasSpawned = true;
         _stopSpawning = true;
 
         Vector3 posToSpawn = new Vector3(0, 8, 0);
@@ -392,15 +302,48 @@ public class SpawnManager : MonoBehaviour
         Instantiate(_bossPrefab, posToSpawn, Quaternion.identity);
     }
 
-    /*
-    IEnumerator BossSpawn()
+    public void WaveSwitchState()
     {
-        Vector3 posToSpawn = new Vector3(0, 8, 0);
-        Instantiate(_bossPrefab, posToSpawn, Quaternion.identity);
-        yield break;
-    }
-    */
+        int _randomSpawnLocation = Random.Range(0, 3);
 
+        switch (_randomSpawnLocation)
+        {
+            case 0:
+                Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
+                GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
+                newEnemy.GetComponent<Enemy>().AssignDirection(0);
+                newEnemy.transform.parent = _enemyContainer.transform;
+                break;
+            case 1:
+                Vector3 spawnGoLeft = new Vector3(11f, Random.Range(-1.0f, 5.5f), 0);
+                GameObject leftEnemy = Instantiate(_enemyPrefab, spawnGoLeft, Quaternion.identity);
+                leftEnemy.GetComponent<Enemy>().AssignDirection(1);
+                leftEnemy.transform.parent = _enemyContainer.transform;
+                break;
+            case 2:
+                Vector3 spawnGoRight = new Vector3(-11f, Random.Range(-1.0f, 5.5f), 0);
+                GameObject rightEnemy = Instantiate(_enemyPrefab, spawnGoRight, Quaternion.identity);
+                rightEnemy.GetComponent<Enemy>().AssignDirection(2);
+                rightEnemy.transform.parent = _enemyContainer.transform;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void BossHasDied()
+    {
+        _stopSpawning = false;
+        StartCoroutine(WaveRestartRoutine());
+
+    }
+
+    IEnumerator WaveRestartRoutine()
+    {
+        yield return new WaitForSeconds(8f);
+        StartSpawning();
+        
+    }
     public void OnPlayerDeath()
     {
         _stopSpawning = true;

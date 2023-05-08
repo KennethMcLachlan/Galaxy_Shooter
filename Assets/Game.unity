@@ -1391,8 +1391,10 @@ MonoBehaviour:
   _waveFourCount: 18
   _waveOneSpeed: 3
   _waveTwoSpeed: 2.5
-  _waveThreeSpeed: 2
-  _waveFourSpeed: 1
+  _waveThreeSpeed: 2.5
+  _waveFourSpeed: 2
+  _waveCount: 0
+  _waveSpeed: 0
   _uiManager: {fileID: 1174720611}
   _bossPrefab: {fileID: 5503415227093477391, guid: 1c3c7b88bdfab4346ad5f69d943fec27, type: 3}
 --- !u!4 &1415568545

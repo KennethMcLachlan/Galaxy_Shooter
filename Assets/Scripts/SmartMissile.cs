@@ -30,7 +30,7 @@ public class SmartMissile : MonoBehaviour
 
     public void HomingBombBehavior()
     {
-        if (gameObject != null)
+        if (gameObject != null && player != null)
         {
             transform.Translate(Vector3.up * _movementSpeed * Time.deltaTime);
             transform.up = _target.position - transform.position;

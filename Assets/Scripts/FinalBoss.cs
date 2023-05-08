@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -24,15 +25,13 @@ public class FinalBoss : MonoBehaviour
     [SerializeField]
     private GameObject _bossLaser;
 
-    private bool _bossIsAlive;
-
     [SerializeField]
     private float _fireRate = 0.5f;
 
     private float _canFire = -1f;
 
     [SerializeField]
-    private int _lives = 15;
+    private int _lives = 20;
 
     [SerializeField]
     private GameObject _bossLaserBeam;
@@ -45,15 +44,17 @@ public class FinalBoss : MonoBehaviour
 
     private bool _isBossActive;
 
+    private bool _bossIsAlive;
+
     [SerializeField]
     private GameObject _explosionPrefab;
 
     private Vector3 _scaleChange;
 
-    private float _timeCounter;
-
     [SerializeField]
     private float _laserFireDelay = 0.1f;
+
+    private float _timeCounter;
 
     private WaitForSeconds _waitOneSecond = new WaitForSeconds(1);
 
@@ -64,11 +65,31 @@ public class FinalBoss : MonoBehaviour
     [SerializeField]
     private float _battleSpeedIncrease = 1.5f;
 
+    [SerializeField]
+    private GameObject _visualDamageLeft;
+
+    [SerializeField]
+    private GameObject _visualDamageRight;
+
+    [SerializeField]
+    private GameObject _visualDamageCenter;
+
+    private Player _player;
+
+    private UIManager _uiManager;
+
+    private SpawnManager _spawnManager;
 
 
     void Start()
     {
         _bossIsAlive = true;
+
+        _player = GameObject.Find("Player_Ship").GetComponent<Player>();
+
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
     }
 
     
@@ -122,7 +143,7 @@ public class FinalBoss : MonoBehaviour
 
             LaserBeam();
 
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(7f);
         }
     }
 
@@ -197,13 +218,20 @@ public class FinalBoss : MonoBehaviour
     {
         _lives -= 1;
 
+        if (_lives <= 15)
+        {
+            _visualDamageRight.SetActive(true);
+        }
+
         if ( _lives <= 10)
         {
+            _visualDamageLeft.SetActive(true);
             _battleSpeed = _battleSpeed + _battleSpeedIncrease;
         }
 
         if (_lives <= 5)
         {
+            _visualDamageCenter.SetActive(true);
             _battleSpeed = _battleSpeed + _battleSpeedIncrease;
             GetComponent<SpriteRenderer>().material.color = Color.red;
         }
@@ -219,6 +247,8 @@ public class FinalBoss : MonoBehaviour
             CircleCollider2D circleCollider = GetComponent<CircleCollider2D>();
             circleCollider.enabled = false;
 
+            _player.AddScore(2500);
+            
             StartCoroutine(ExplosionRoutine());
         }
     }
@@ -235,7 +265,7 @@ public class FinalBoss : MonoBehaviour
 
     IEnumerator LaserBeamCooldownRoutine()
     {
-        yield return new WaitForSeconds(5.4f);
+        yield return new WaitForSeconds(5.3f);
         _bossLaserBeam.SetActive(false);
     }
 
@@ -312,7 +342,16 @@ public class FinalBoss : MonoBehaviour
 
         _explosionPrefab.transform.localScale -= _scaleChange;
 
+        BossIsDead();
+
         Destroy(gameObject);
+    }
+
+    public void BossIsDead()
+    {
+        _bossIsAlive = false;
+        _spawnManager.BossHasDied();
+        _uiManager.StartUpdateWavesCoroutine();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -324,6 +363,11 @@ public class FinalBoss : MonoBehaviour
             _collisionSFX.Play();
 
             LivesManager();
+        }
+
+        if (other.tag == "Player" && _isBossActive == true && _player != null)
+        {
+            _player.Damage();
         }
     }
 }

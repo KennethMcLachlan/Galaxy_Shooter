@@ -71,7 +71,6 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        
 
         switch (_enemyDirection)
         {
@@ -90,6 +89,8 @@ public class Enemy : MonoBehaviour
 
         if (Time.time > _canFire)
         {
+            _enemyIsFiring = true;
+
             _fireRate = Random.Range(3.0f, 7.0f);
             _canFire = Time.time + _fireRate;
 
@@ -99,7 +100,6 @@ public class Enemy : MonoBehaviour
             for (int i = 0; i < lasers.Length; i++)
             {
                 lasers[i].AssignEnemyLaser();
-
             }
 
         }
@@ -161,6 +161,28 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void WhenEnemyDiesSequence()
+    {
+        _enemyIsDead = true;
+
+        if (_enemyIsDead == true)
+        {
+            _ramRange = 0;
+            gameObject.GetComponent<SpriteRenderer>().material.color = Color.white;
+            _canFire = 0;
+        }
+
+        _anim.SetTrigger("OnEnemyDeath");
+
+        _speed = 0.0f;
+
+        _audioSource.Play();
+
+        Destroy(GetComponent<Collider2D>());
+
+        Destroy(gameObject, 2.8f);
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
        
@@ -173,54 +195,14 @@ public class Enemy : MonoBehaviour
                 player.Damage();
             }
 
-            _enemyIsDead = true;
-
-            if (_enemyIsDead == true)
-            {
-                _ramRange = 0;
-                gameObject.GetComponent<SpriteRenderer>().material.color = Color.white;
-                _canFire = 0;
-            }
-
-            _anim.SetTrigger("OnEnemyDeath");
-            
-            _speed = 0.0f;
-
-            _audioSource.Play();
-            
-            Destroy(GetComponent<Collider2D>());
-
-            Destroy(gameObject, 2.8f);
+            WhenEnemyDiesSequence();
         }
 
-        if (other.tag == "Laser")
+        if (other.tag == "Laser" && _enemyIsFiring == false)
         {
             Destroy(other.gameObject);
 
-            if (_player != null)
-            {
-                _player.AddScore(100);
-            }
-
-            _enemyIsDead = true;
-
-            if (_enemyIsDead == true)
-            {
-                _ramRange = 0;
-                gameObject.GetComponent<SpriteRenderer>().material.color = Color.white;
-                _canFire = 0;
-            }
-
-            _anim.SetTrigger("OnEnemyDeath");
-
-            _speed = 0.0f;
-
-            _audioSource.Play();
-
-            Destroy(GetComponent<Collider2D>());
-
-            Destroy(gameObject, 2.8f);
-            
+            WhenEnemyDiesSequence();
         }
 
         if (other.tag == "Laser_Beam")
@@ -230,24 +212,7 @@ public class Enemy : MonoBehaviour
                 _player.AddScore(100);
             }
 
-            _enemyIsDead = true;
-
-            if (_enemyIsDead == true)
-            {
-                _ramRange = 0;
-                gameObject.GetComponent<SpriteRenderer>().material.color = Color.white;
-                _canFire = 0;
-            }
-
-            _anim.SetTrigger("OnEnemyDeath");
-
-            _speed = 0.0f;
-
-            _audioSource.Play();
-
-            Destroy(GetComponent<Collider2D>());
-
-            Destroy(gameObject, 2.8f);
+            WhenEnemyDiesSequence();
         }
     }
 

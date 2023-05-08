@@ -119,7 +119,7 @@ public class UIManager : MonoBehaviour
         StartCoroutine(UpdateWavesCountDownRoutine());
     }
 
-    IEnumerator UpdateWavesCountDownRoutine()
+    public IEnumerator UpdateWavesCountDownRoutine()
     {
 
         _endOfWaveText.gameObject.SetActive(true);
@@ -170,4 +170,5 @@ public class UIManager : MonoBehaviour
     {
         StartCoroutine(UpdateBossRound());
     }
+
 }

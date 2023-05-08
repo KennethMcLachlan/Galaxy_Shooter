@@ -67,7 +67,6 @@ public class SmartEnemy : MonoBehaviour
         _player = GameObject.Find("Player_Ship").GetComponent<Player>();
 
     }
-
     
     void Update()
     {
@@ -121,8 +120,6 @@ public class SmartEnemy : MonoBehaviour
         {
             
             Destroy(gameObject);
-            //float randomY = Random.Range(-1.0f, 5.5f);
-            //transform.position = new Vector3(11f, randomY, 0);
         }
 
     }
@@ -134,8 +131,6 @@ public class SmartEnemy : MonoBehaviour
         if (transform.position.x > 11f)
         {
             Destroy(gameObject);
-            //float randomY = Random.Range(-1.0f, 5.5f);
-            //transform.position = new Vector3(-11f, randomY, 0);
         }
 
     }
@@ -147,8 +142,6 @@ public class SmartEnemy : MonoBehaviour
         if (transform.position.y < -6f)
         {
             Destroy(gameObject);
-            //float randomX = Random.Range(-9.5f, 9.5f);
-            //transform.position = new Vector3(randomX, 7f, 0);
         }
 
     }
@@ -160,8 +153,6 @@ public class SmartEnemy : MonoBehaviour
         if (transform.position.y < -6f)
         {
             Destroy(gameObject);
-            //float randomX = Random.Range(-9.5f, 9.5f);
-            //transform.position = new Vector3(randomX, 7f, 0);
         }
 
     }
@@ -173,7 +164,6 @@ public class SmartEnemy : MonoBehaviour
 
     public void EnemyBombFire()
     {
-
         if (Time.time > _canFire)
         {
             _fireRate = Random.Range(2.0f, 5.5f);
@@ -187,7 +177,6 @@ public class SmartEnemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
         if (gameObject != null)
         {
             
@@ -305,7 +294,7 @@ public class SmartEnemy : MonoBehaviour
             _distance = Vector3.Distance(_player.transform.position, transform.position);
         }
 
-        if (_distance <= _ramRange)
+        if (_distance <= _ramRange && _player != null)
         {
             Vector3 direction = transform.position - _player.transform.position;
             direction = direction.normalized;

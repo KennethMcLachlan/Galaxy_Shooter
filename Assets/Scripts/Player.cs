@@ -406,6 +406,8 @@ public class Player : MonoBehaviour
     {
         _isStarPowerActive = true;
 
+        GameObject.Find("Main Camera").GetComponent<CameraShake>().StartShake();
+
         _laserBeamAudio.Play();
         _laserBeamPrefab.SetActive(true);
 

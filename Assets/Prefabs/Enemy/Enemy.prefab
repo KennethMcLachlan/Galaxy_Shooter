@@ -288,6 +288,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_Detector
       objectReference: {fileID: 0}
+    - target: {fileID: 8197770830788287201, guid: 656b6230259d46f4c998ef1dac81dd5f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8197770830788287202, guid: 656b6230259d46f4c998ef1dac81dd5f, type: 3}
       propertyPath: m_RootOrder
       value: 0
